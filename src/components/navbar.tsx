@@ -1,4 +1,4 @@
-import logoAlto from "../assets/logo alto.png";
+import logoAlto from "../assets/logo-alto.png";
 
 const Navbar = () => {
   return (

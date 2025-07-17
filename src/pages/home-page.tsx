@@ -1,3 +1,4 @@
+import logoPizzetta from "../assets/logo-pizzeria.png";
 import pizzeriaImage from "../assets/pizzeria.png";
 import Navbar from "../components/navbar";
 
@@ -9,15 +10,20 @@ const HomePage = () => {
     >
       <Navbar />
       <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
-        <p className="uppercase text-sm tracking-wide mb-2">
+        <img
+          src={logoPizzetta}
+          alt="Logo Pizzeria"
+          className="w-40 h-auto mx-auto mb-4"
+        />
+        <p className="uppercase text-xl tracking-wide mb-6 pt-1 border-t border-[#d7b07d]">
           HELLO, NEW FRIEND
         </p>
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-6">ORDINA QUI</h1>
+        <h1 className="text-4xl md:text-6xl font-bold mb-10">ORDINA QUI</h1>
         <div className="flex gap-4">
-          <button className="bg-[#d5bfa2] hover:bg-[#cbb393] text-black px-6 py-3 rounded-full font-semibold transition">
+          <button className="bg-transparent hover:bg-[#d7b07d] text-white px-6 py-3 border border-white rounded-[3px] font-semibold transition cursor-pointer">
             RISERVA UN TAVOLO
           </button>
-          <button className="bg-white hover:bg-gray-200 text-black px-6 py-3 rounded-full font-semibold transition">
+          <button className="bg-transparent hover:border-b-2 border-white text-white px-6 py-3 rounded-[3px] font-semibold transition cursor-pointer">
             MENU ONLINE
           </button>
         </div>
