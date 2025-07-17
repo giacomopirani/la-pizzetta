@@ -2,7 +2,7 @@ import logoAlto from "../assets/logo-alto.png";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-0 left-0 w-full z-10">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-black/65 bg-opacity-100 shadow-xl">
       <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center text-white">
         <img
           src={logoAlto}

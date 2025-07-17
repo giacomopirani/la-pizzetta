@@ -4,6 +4,7 @@ import paniniMain from "../assets/icon-svg/panini.svg";
 import piadineMain from "../assets/icon-svg/piadine.svg";
 import pizzeMain from "../assets/icon-svg/pizza.svg";
 
+import cascioniLabel from "../assets/icon-label/cascioni.png";
 import frittiLabel from "../assets/icon-label/fritti.png";
 import paniniLabel from "../assets/icon-label/panini.png";
 import piadineLabel from "../assets/icon-label/piadine.png";
@@ -33,7 +34,7 @@ const categories = [
   },
   {
     mainIcon: piadineMain,
-    labelImage: piadineLabel,
+    labelImage: cascioniLabel,
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
