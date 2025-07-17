@@ -1,3 +1,5 @@
+import { motion } from "motion/react";
+import { FaChevronDown } from "react-icons/fa";
 import logoPizzetta from "../assets/logo-pizzeria.png";
 import pizzeriaImage from "../assets/pizzeria.png";
 import Navbar from "../components/navbar";
@@ -5,7 +7,7 @@ import Navbar from "../components/navbar";
 const HomePage = () => {
   return (
     <div
-      className="h-screen bg-cover bg-center relative"
+      className="h-screen bg-cover bg-center relative inset-0 bg-black opacity-80"
       style={{ backgroundImage: `url(${pizzeriaImage})` }}
     >
       <Navbar />
@@ -27,6 +29,13 @@ const HomePage = () => {
             MENU ONLINE
           </button>
         </div>
+        <motion.div
+          className="mt-16 text-[#f2d0a4]"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <FaChevronDown size={40} />
+        </motion.div>
       </div>
     </div>
   );

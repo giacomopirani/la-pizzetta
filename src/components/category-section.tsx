@@ -14,6 +14,12 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const categories = [
   {
+    mainIcon: pizzeMain,
+    labelImage: pizzeLabel,
+    description:
+      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+  },
+  {
     mainIcon: frittiMain,
     labelImage: frittiLabel,
     description:
@@ -37,12 +43,6 @@ const categories = [
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
-  {
-    mainIcon: pizzeMain,
-    labelImage: pizzeLabel,
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
-  },
 ];
 
 export default function CategorySection() {
@@ -56,14 +56,12 @@ export default function CategorySection() {
   };
 
   return (
-    <section className="bg-black text-white py-16 relative overflow-hidden">
-      {/* Titolo */}
-      <div className="text-center mb-8">
+    <section className="bg-black text-white py-18 relative overflow-hidden">
+      <div className="text-center mb-6">
         <h2 className="text-4xl font-bold uppercase">Scegli la categoria</h2>
         <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded"></div>
       </div>
 
-      {/* Pulsanti Frecce */}
       <motion.button
         whileHover={{ scale: 1.2 }}
         animate={{ y: [0, -5, 0] }}
@@ -84,23 +82,21 @@ export default function CategorySection() {
         <FaChevronRight />
       </motion.button>
 
-      {/* Lista categorie scrollabile */}
       <div
         ref={containerRef}
-        className="flex gap-8 px-8 overflow-x-auto no-scrollbar scroll-smooth"
+        className="flex gap-8 pt-6 px-8 overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
       >
         {categories.map((cat, index) => (
           <motion.div
             key={index}
-            className="text-center min-w-[200px] flex-shrink-0"
+            className="text-center max-w-[250px] flex-shrink-0"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
             whileHover={{ scale: 1.05 }}
           >
-            {/* Icona circolare */}
-            <div className="w-40 h-40 rounded-full bg-[#777] flex items-center justify-center mb-4 mx-auto cursor-pointer">
+            <div className="w-40 h-40 border-2 border-white rounded-full bg-[#777] flex items-center justify-center mb-4 mx-auto cursor-pointer">
               <img
                 src={cat.mainIcon}
                 alt={`Categoria ${index + 1}`}
@@ -110,7 +106,6 @@ export default function CategorySection() {
               />
             </div>
 
-            {/* Etichetta */}
             <img
               src={cat.labelImage}
               alt={`Etichetta ${index + 1}`}
@@ -119,7 +114,6 @@ export default function CategorySection() {
               className="mx-auto"
             />
 
-            {/* Descrizione */}
             <p className="text-sm mt-2 text-gray-300">{cat.description}</p>
           </motion.div>
         ))}
