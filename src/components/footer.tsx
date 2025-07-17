@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa";
 import logoPizzetta from "../assets/logo-pizzeria.png";
 
-export default function Footer() {
+const Footer = () => {
   return (
     <footer className="bg-[#1D232A] text-gray-300 font-sans">
       <div className="container mx-auto py-12 px-6 lg:px-8">
@@ -140,4 +140,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

@@ -8,10 +8,10 @@ const HomePage = () => {
   return (
     <>
       <div
-        className="h-screen bg-cover bg-center relative inset-0 bg-black opacity-80 pt-20"
+        className="h-screen bg-cover bg-center relative inset-0 bg-black opacity-80 pt-20 "
         style={{ backgroundImage: `url(${pizzeriaImage})` }}
       >
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-25">
           <img
             src={logoPizzetta}
             alt="Logo Pizzeria"
@@ -31,10 +31,19 @@ const HomePage = () => {
           </div>
           <motion.div
             className="mt-16 text-[#f2d0a4]"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
+            animate={{
+              y: [0, 15, 0],
+              opacity: [1, 0.6, 1],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 2.5,
+              ease: "easeInOut",
+            }}
           >
-            <FaChevronDown size={60} />
+            <FaChevronDown size={100} />
           </motion.div>
         </div>
       </div>

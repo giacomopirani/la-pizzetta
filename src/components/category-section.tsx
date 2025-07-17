@@ -46,7 +46,7 @@ const categories = [
   },
 ];
 
-export default function CategorySection() {
+const CategorySection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -85,7 +85,7 @@ export default function CategorySection() {
 
       <div
         ref={containerRef}
-        className="flex gap-8 pt-6 px-8 overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
+        className="flex gap-8 pt-6 px-8 mr-6 ml-6 overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
       >
         {categories.map((cat, index) => (
           <motion.div
@@ -121,4 +121,6 @@ export default function CategorySection() {
       </div>
     </section>
   );
-}
+};
+
+export default CategorySection;
