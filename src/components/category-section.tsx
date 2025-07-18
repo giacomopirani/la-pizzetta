@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import cascioneMain from "../assets/icon-svg/cascione.svg";
 import frittiMain from "../assets/icon-svg/fritti.svg";
 import paniniMain from "../assets/icon-svg/panini.svg";
@@ -14,41 +15,51 @@ const categories = [
     label: "PIZZE",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    route: "/pizze",
   },
   {
     mainIcon: paniniMain,
     label: "PANINI",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    route: "/panini",
   },
   {
     mainIcon: cascioneMain,
     label: "CASCIONI",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    route: "/cascioni",
   },
   {
     mainIcon: piadineMain,
     label: "PIADINE",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    route: "/piadine",
   },
   {
     mainIcon: frittiMain,
     label: "FRITTI",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    route: "/fritti",
   },
 ];
 
 const CategorySection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const scroll = (direction: "left" | "right") => {
     if (containerRef.current) {
       const amount = direction === "left" ? -300 : 300;
       containerRef.current.scrollBy({ left: amount, behavior: "smooth" });
     }
+  };
+
+  const handleCategoryClick = (route: string) => {
+    navigate(route);
   };
 
   return (
@@ -91,6 +102,7 @@ const CategorySection = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
             whileHover={{ scale: 1.05 }}
+            onClick={() => handleCategoryClick(cat.route)}
           >
             <div className="w-40 h-40 border-2 border-white rounded-full bg-[#777] flex items-center justify-center mb-4 mx-auto cursor-pointer">
               <img

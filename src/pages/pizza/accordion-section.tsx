@@ -21,7 +21,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
 
     return (
       <motion.div
-        className="mb-4 bg-black/80 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50"
+        className="mb-4 bg-black backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50"
         initial={false}
         animate={{
           scale: isOpen ? 1.02 : 1,
