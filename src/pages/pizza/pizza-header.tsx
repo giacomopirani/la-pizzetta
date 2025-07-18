@@ -11,7 +11,7 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative py-12 overflow-hidden"
+      className="relative py-20 overflow-hidden"
       style={{
         backgroundImage: backgroundImage
           ? `url(${backgroundImage})`
@@ -21,7 +21,7 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/10"></div>
 
       <div className="container mx-auto px-4 relative pt-12">
         <motion.div

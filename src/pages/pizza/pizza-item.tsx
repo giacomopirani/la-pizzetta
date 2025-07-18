@@ -19,7 +19,7 @@ const PizzaItem: React.FC<PizzaItemProps> = React.memo(
       <div
         className={`${
           pizza.isSpecial
-            ? "bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border-purple-500/30"
+            ? "bg-gradient-to-r from-indigo-900/30 to-purple-900/30 border-yellow-200"
             : "bg-gray-700/30 border-gray-600/30"
         } rounded-xl p-4 border hover:border-gray-500/50 transition-all duration-300 hover:bg-gray-700/50`}
       >

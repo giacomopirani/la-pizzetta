@@ -16,7 +16,7 @@ const Navbar = () => {
           <a href="#">Contact</a>
           <a href="#">Dove siamo</a>
         </nav>
-        <button className="bg-[#d5bfa2] text-white px-4 py-2 rounded-[3px] font-medium text-sm hover:bg-[#b28d5d] transition">
+        <button className="bg-[#AA9782] text-white px-4 py-2 rounded-[3px] font-medium text-sm hover:bg-[#846945] transition-colors">
           RESERVATION
         </button>
       </div>

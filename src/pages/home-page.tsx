@@ -30,7 +30,7 @@ const HomePage = () => {
             </button>
           </div>
           <motion.div
-            className="mt-16 text-[#f2d0a4]"
+            className="mt-16 text-[#AA9782]"
             animate={{
               y: [0, 15, 0],
               opacity: [1, 0.6, 1],

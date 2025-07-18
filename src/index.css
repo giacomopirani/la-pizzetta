@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+/* === Hoverage === */
+@font-face {
+  font-family: "Hoverage";
+  src: url("/font/Hoverage/Hoverage.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* === Source Sans Pro === */
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("/font/SourceSansPro/SourceSansPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
 body {
   background-color: #000;
 }

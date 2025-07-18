@@ -1,14 +1,9 @@
 import { motion } from "framer-motion";
+import cascioneMain from "../assets/icon-svg/cascione.svg";
 import frittiMain from "../assets/icon-svg/fritti.svg";
 import paniniMain from "../assets/icon-svg/panini.svg";
 import piadineMain from "../assets/icon-svg/piadine.svg";
 import pizzeMain from "../assets/icon-svg/pizza.svg";
-
-import cascioniLabel from "../assets/icon-label/cascioni.png";
-import frittiLabel from "../assets/icon-label/fritti.png";
-import paniniLabel from "../assets/icon-label/panini.png";
-import piadineLabel from "../assets/icon-label/piadine.png";
-import pizzeLabel from "../assets/icon-label/pizze.png";
 
 import { useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
@@ -16,31 +11,31 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 const categories = [
   {
     mainIcon: pizzeMain,
-    labelImage: pizzeLabel,
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
-  },
-  {
-    mainIcon: frittiMain,
-    labelImage: frittiLabel,
+    label: "PIZZE",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
   {
     mainIcon: paniniMain,
-    labelImage: paniniLabel,
+    label: "PANINI",
+    description:
+      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+  },
+  {
+    mainIcon: cascioneMain,
+    label: "CASCIONI",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
   {
     mainIcon: piadineMain,
-    labelImage: cascioniLabel,
+    label: "PIADINE",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
   {
-    mainIcon: piadineMain,
-    labelImage: piadineLabel,
+    mainIcon: frittiMain,
+    label: "FRITTI",
     description:
       "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
   },
@@ -107,13 +102,12 @@ const CategorySection = () => {
               />
             </div>
 
-            <img
-              src={cat.labelImage}
-              alt={`Etichetta ${index + 1}`}
-              width={100}
-              height={40}
-              className="mx-auto"
-            />
+            <p
+              style={{ fontFamily: "Hoverage, sans-serif", fontSize: "28px" }}
+              className="mx-auto text-center text-[#AA9782]"
+            >
+              {cat.label}
+            </p>
 
             <p className="text-sm mt-2 text-gray-300">{cat.description}</p>
           </motion.div>

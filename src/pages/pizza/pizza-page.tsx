@@ -5,6 +5,8 @@ import type { SectionKey } from "../../types/pizza-type/pizza-types";
 import AccordionSection from "./accordion-section";
 import PizzaHeader from "./pizza-header";
 
+import pizzaHeaderImage from "../../assets/pizza-background/pizza.jpg";
+
 interface PizzaPageProps {
   headerBackgroundImage?: string;
 }
@@ -24,8 +26,10 @@ const PizzaPage: React.FC<PizzaPageProps> = ({ headerBackgroundImage }) => {
   const sectionKeys = useMemo(() => Object.keys(pizzaData) as SectionKey[], []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900">
-      <PizzaHeader backgroundImage={headerBackgroundImage} />
+    <div className="min-h-screen bg-white">
+      <PizzaHeader
+        backgroundImage={headerBackgroundImage || pizzaHeaderImage}
+      />
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
