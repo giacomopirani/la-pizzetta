@@ -12,13 +12,11 @@ interface PizzaPageProps {
 }
 
 const PizzaPage: React.FC<PizzaPageProps> = ({ headerBackgroundImage }) => {
-  const [openSection, setOpenSection] = useState<SectionKey | null>(
-    "classiche"
-  );
+  const [openSection, setOpenSection] = useState<SectionKey>();
 
   const toggleSection = useCallback(
     (section: SectionKey) => {
-      setOpenSection(openSection === section ? null : section);
+      setOpenSection(openSection !== section ? section : undefined);
     },
     [openSection]
   );

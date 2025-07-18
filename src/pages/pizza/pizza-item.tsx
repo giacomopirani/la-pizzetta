@@ -8,8 +8,29 @@ interface PizzaItemProps {
   color: string;
 }
 
-const PizzaItem: React.FC<PizzaItemProps> = React.memo(
-  ({ pizza, index, color }) => (
+const PizzaItem: React.FC<PizzaItemProps> = React.memo(({ pizza, index }) => {
+  const getBackgroundColor = () => {
+    if (pizza.isSpecial) {
+      return "bg-gradient-to-r from-gray-800 to-gray-900 border-white";
+    }
+    return "bg-gray-700/30 border-gray-600/30";
+  };
+
+  const getTextColor = () => {
+    if (pizza.isSpecial) {
+      return "text-white";
+    }
+    return "text-white";
+  };
+
+  const getIngredientsColor = () => {
+    if (pizza.isSpecial) {
+      return "text-white";
+    }
+    return "text-white";
+  };
+
+  return (
     <motion.div
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
@@ -17,34 +38,29 @@ const PizzaItem: React.FC<PizzaItemProps> = React.memo(
       className="group"
     >
       <div
-        className={`${
-          pizza.isSpecial
-            ? "bg-gradient-to-r from-gray-900/30 to-gray-300/30 border-yellow-200"
-            : "bg-gray-700/30 border-gray-600/30"
-        } rounded-xl p-4 border hover:border-gray-500/50 transition-all duration-300 hover:bg-gray-700/50`}
+        className={`${getBackgroundColor()} rounded-xl p-4 border hover:border-gray-500/50 transition-all duration-300 hover:bg-gray-700/50`}
       >
         <div className="flex justify-between items-start">
           <div className="flex-1">
+            {/* Nome pizza in maiuscolo e bold come nel menu */}
             <h3
-              className={`font-bold text-lg mb-2 group-hover:text-gray-200 transition-colors ${
-                pizza.isSpecial ? "text-purple-200" : "text-white"
-              }`}
+              className={`font-bold text-lg mb-2 tracking-wide uppercase transition-colors ${getTextColor()}`}
             >
               {pizza.name}
             </h3>
+
+            {/* Ingredienti */}
             {pizza.ingredients && (
-              <p
-                className={`text-sm leading-relaxed ${
-                  pizza.isSpecial ? "text-purple-300" : "text-gray-300"
-                }`}
-              >
+              <p className={`text-sm leading-relaxed ${getIngredientsColor()}`}>
                 {pizza.ingredients}
               </p>
             )}
           </div>
+
+          {/* Prezzo */}
           <div className="ml-4 flex flex-col items-end">
             <div
-              className={`text-xl font-bold bg-gradient-to-r ${color} bg-clip-text text-transparent`}
+              className={`text-xl font-bold bg-white bg-clip-text text-transparent`}
             >
               {pizza.price}
             </div>
@@ -52,7 +68,7 @@ const PizzaItem: React.FC<PizzaItemProps> = React.memo(
         </div>
       </div>
     </motion.div>
-  )
-);
+  );
+});
 
 export default PizzaItem;

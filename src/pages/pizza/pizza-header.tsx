@@ -29,12 +29,14 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="text-center bg-black/50 backdrop-blur-sm rounded-lg p-8 inline-block"
         >
+          <p className="font-bold text-white border-b-2 mb-3 pb-2">MENU</p>
           <h1
             style={{ fontFamily: "Hoverage, sans-serif" }}
             className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight drop-shadow-lg"
           >
             PIZZE
           </h1>
+
           <img
             src={pizzaIcon}
             alt="Icona Pizza"
