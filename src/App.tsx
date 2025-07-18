@@ -10,6 +10,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        {/*  <Route path="/pizza" element={<PizzaPage />} /> */}
       </Routes>
       <Footer />
     </Router>
