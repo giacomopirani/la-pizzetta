@@ -9,9 +9,50 @@ import {
 } from "../../types/pizza-type/pizza-types";
 
 export const pizzaData: PizzaData = {
+  giganti: {
+    icon: GiFullPizza,
+    color: "black",
+    pizzas: [
+      {
+        name: "MARGHERITA",
+        ingredients:
+          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
+        price: "€14,00",
+        isSpecial: true,
+      },
+      {
+        name: "1 GUSTO A SCELTA",
+        ingredients:
+          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
+        price: "€17,00",
+        isSpecial: true,
+      },
+      {
+        name: "2 GUSTI A SCELTA",
+        ingredients:
+          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
+        price: "€20,00",
+        isSpecial: true,
+      },
+      {
+        name: "3 GUSTI A SCELTA",
+        ingredients:
+          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
+        price: "€23,00",
+        isSpecial: true,
+      },
+      {
+        name: "MILLEGUSTI",
+        ingredients:
+          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
+        price: "€25,00",
+        isSpecial: true,
+      },
+    ],
+  },
   classiche: {
     icon: FaPizzaSlice,
-    color: "from-red-500 to-orange-500",
+    color: "black",
     pizzas: [
       {
         name: "MARGHERITA",
@@ -119,7 +160,7 @@ export const pizzaData: PizzaData = {
   },
   speciali: {
     icon: FaStar,
-    color: "from-yellow-500 to-amber-500",
+    color: "black",
     pizzas: [
       {
         name: "QUATTRO FORMAGGI",
@@ -208,7 +249,7 @@ export const pizzaData: PizzaData = {
   },
   bianche: {
     icon: LuPizza,
-    color: "from-purple-500 to-pink-500",
+    color: "black",
     pizzas: [
       {
         name: "LA LÙ",
@@ -250,7 +291,7 @@ export const pizzaData: PizzaData = {
   },
   marinare: {
     icon: BiSolidPizza,
-    color: "from-blue-500 to-cyan-500",
+    color: "black",
     pizzas: [
       {
         name: "MARINARA",
@@ -267,7 +308,7 @@ export const pizzaData: PizzaData = {
   },
   fornarine: {
     icon: PiPizzaLight,
-    color: "from-green-500 to-emerald-500",
+    color: "black",
     pizzas: [
       { name: "FORNARINA", ingredients: "", price: "€3,00" },
       { name: "FORNARINA ROSSA", ingredients: "", price: "€3,50" },
@@ -291,54 +332,13 @@ export const pizzaData: PizzaData = {
       },
     ],
   },
-  giganti: {
-    icon: GiFullPizza,
-    color: "from-indigo-500 to-purple-600",
-    pizzas: [
-      {
-        name: "MARGHERITA",
-        ingredients:
-          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
-        price: "€14,00",
-        isSpecial: true,
-      },
-      {
-        name: "1 GUSTO A SCELTA",
-        ingredients:
-          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
-        price: "€17,00",
-        isSpecial: true,
-      },
-      {
-        name: "2 GUSTI A SCELTA",
-        ingredients:
-          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
-        price: "€20,00",
-        isSpecial: true,
-      },
-      {
-        name: "3 GUSTI A SCELTA",
-        ingredients:
-          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
-        price: "€23,00",
-        isSpecial: true,
-      },
-      {
-        name: "MILLEGUSTI",
-        ingredients:
-          "Le nostre pizze giganti sono ideali per 3/4 persone, da gustare in compagnia!",
-        price: "€25,00",
-        isSpecial: true,
-      },
-    ],
-  },
 };
 
 export const sectionTitles: SectionTitles = {
+  giganti: "Le Giganti",
   classiche: "Le Classiche",
   speciali: "Le Speciali",
   bianche: "Le Bianche",
   marinare: "Le Marinare",
   fornarine: "Le Fornarine",
-  giganti: "Le Giganti",
 };
