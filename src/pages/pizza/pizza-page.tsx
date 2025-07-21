@@ -5,7 +5,7 @@ import type { SectionKey } from "../../types/pizza-type/pizza-types";
 import AccordionSection from "./accordion-section";
 import PizzaHeader from "./pizza-header";
 
-import pizzaHeaderImage from "../../assets/pizza-background/pizza.jpg";
+import pizzaHeaderImage from "../../assets/background-img-menu/pizza.jpg";
 
 interface PizzaPageProps {
   headerBackgroundImage?: string;

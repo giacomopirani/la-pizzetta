@@ -263,12 +263,13 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.2 }}
                   >
-                    <h4 className="text-white font-bold mb-2 uppercase tracking-wide">
-                      ⭐ Pizze Speciali
+                    <h4 className="text-white font-bold mb-2  tracking-wide">
+                      ⭐ Le nostre specialità della casa con ingredienti
+                      selezionati!
                     </h4>
                     <p className="text-white text-sm">
-                      Le nostre specialità della casa con ingredienti
-                      selezionati!
+                      * Base <span className="text-red-700">POMODORO</span> e
+                      MOZZARELLA
                     </p>
                   </motion.div>
                 )}
@@ -280,7 +281,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
                       duration: 0.3,
-                      delay: 0.1 + index * 0.05, // Staggered animation
+                      delay: 0.1 + index * 0.05,
                     }}
                   >
                     <PizzaItem pizza={pizza} index={index} color={data.color} />
