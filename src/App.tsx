@@ -1,12 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
+import ScrollToTop from "./components/scroll-top";
 import HomePage from "./pages/home-page";
 import PizzaPage from "./pages/pizza/pizza-page";
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
 
       <Routes>

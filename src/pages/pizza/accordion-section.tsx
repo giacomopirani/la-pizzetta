@@ -53,7 +53,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
           style={{
             background:
               sectionKey === "speciali"
-                ? "linear-gradient(135deg, #dc2626, #ea580c)"
+                ? "linear-gradient(135deg, #b19173, #f0d9b5)"
                 : sectionKey === "giganti"
                 ? "linear-gradient(135deg, #6b7280, #9ca3af)"
                 : "linear-gradient(135deg, #1f2937, #111827)",
@@ -258,7 +258,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
 
                 {sectionKey === "speciali" && (
                   <motion.div
-                    className="bg-red-800 rounded-lg p-4 mb-6 border border-red-500/20"
+                    className="bg-yellow-600 rounded-lg p-4 mb-6 border border-red-500/20"
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.2 }}

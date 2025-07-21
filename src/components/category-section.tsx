@@ -69,7 +69,7 @@ const CategorySection = () => {
   };
 
   return (
-    <section className="bg-black text-white py-32 min-h-[700px] relative overflow-hidden">
+    <section className="bg-black text-white py-28 min-h-[600px] relative overflow-hidden">
       <div className="text-center mb-6">
         <h2 className="text-4xl font-bold uppercase">Scegli la categoria</h2>
         <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded" />
@@ -97,7 +97,7 @@ const CategorySection = () => {
 
       <div
         ref={containerRef}
-        className="flex gap-8 py-5 pt-6 px-26 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-smooth"
+        className="flex items-center gap-8 py-5 mt-4 px-26 mx-auto max-w-7xl overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
       >
         {categories.map((cat, index) => (
           <motion.div
