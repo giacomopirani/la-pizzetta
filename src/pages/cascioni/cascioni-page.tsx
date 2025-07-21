@@ -12,7 +12,10 @@ import CascioneHeader from "./cascioni-header";
 const CascioniPage: React.FC = () => {
   const renderSection = (title: string, items: Cascione[]) => (
     <div className="space-y-4">
-      <h2 className="text-3xl font-extrabold uppercase tracking-widest text-[#c7b28c]">
+      <h2
+        style={{ fontFamily: "Hoverage, sans-serif" }}
+        className="text-3xl font-extrabold uppercase tracking-widest text-[#c7b28c]"
+      >
         {title}
       </h2>
       <div className="border-t border-[#c7b28c] pt-4 space-y-4">
