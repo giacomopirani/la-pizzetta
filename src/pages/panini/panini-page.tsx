@@ -17,7 +17,7 @@ const PaniniPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h2 className="text-3xl font-bold text-left mb-2">
+            <h2 className="text-3xl font-bold text-left mb-2 text-[#AA9782]">
               Serviti con patatine fritte
             </h2>
             <p className="text-right italic text-xl text-white mb-8">€13,50</p>
