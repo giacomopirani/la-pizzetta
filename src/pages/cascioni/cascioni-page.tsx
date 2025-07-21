@@ -21,7 +21,15 @@ const CascioniPage: React.FC = () => {
       <div className="border-t border-[#c7b28c] pt-4 space-y-4">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-start">
-            <span className="font-bold uppercase text-white">{item.title}</span>
+            <span className="font-bold uppercase text-white break-words">
+              {item.title.split("\n").map((line, idx) => (
+                <React.Fragment key={idx}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </span>
+
             <span className="italic text-white">{item.price}</span>
           </div>
         ))}

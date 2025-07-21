@@ -16,8 +16,8 @@ const Navbar = () => {
           <Link to="/pizze">Pizze</Link>
           <Link to="/panini">Panini</Link>
           <Link to="/cascioni">Cascioni</Link>
-          <a href="#">Contact</a>
-          <a href="#">Dove siamo</a>
+          <Link to="/piadine">Piadine</Link>
+          <Link to="/fritti">Fritti</Link>
         </div>
         <button className="bg-[#AA9782] text-white px-4 py-2 rounded-[3px] font-medium text-sm hover:bg-[#846945] transition-colors">
           RESERVATION
