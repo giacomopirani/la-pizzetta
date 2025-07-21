@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 
-export default function PageLoader() {
+const PageLoader = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 2500);
+    const timeout = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timeout);
   }, [location]);
 
@@ -17,4 +17,6 @@ export default function PageLoader() {
       <HashLoader size={60} color="black" />
     </div>
   ) : null;
-}
+};
+
+export default PageLoader;
