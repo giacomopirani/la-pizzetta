@@ -7,6 +7,7 @@ import PageTransitionWrapper from "./components/page-transition-wrapper";
 
 import { AppLoadingProvider } from "./context/app-loading-context";
 import HomePage from "./pages/home-page";
+import PaniniPage from "./pages/panini/panini-page";
 import PizzaPage from "./pages/pizza/pizza-page";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/pizze" element={<PizzaPage />} />
+            <Route path="/panini" element={<PaniniPage />} />
           </Routes>
         </PageTransitionWrapper>
 

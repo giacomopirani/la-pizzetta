@@ -14,7 +14,7 @@ const Navbar = () => {
         </Link>
         <nav className="hidden md:flex gap-8 text-sm">
           <Link to="/pizze">Pizze</Link>
-          <a href="#">Panini</a>
+          <Link to="/panini">Panini</Link>
           <a href="#">Fritti</a>
           <a href="#">Contact</a>
           <a href="#">Dove siamo</a>
