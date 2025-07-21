@@ -3,12 +3,12 @@ import React from "react";
 import { paniniData } from "../../data/panini-data/panini-data";
 
 import paniniHeaderImage from "../../assets/background-img-menu/panino.jpg";
-import PizzaHeader from "./panini-header";
+import PaninoHeader from "./panini-header";
 
 const PaniniPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
-      <PizzaHeader backgroundImage={paniniHeaderImage} />
+      <PaninoHeader backgroundImage={paniniHeaderImage} />
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto space-y-8 p-8 bg-black text-white rounded-xl">

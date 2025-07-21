@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import React from "react";
-import paninoIcon from "../../assets/icon-svg/panini.svg";
+import cascioneIcon from "../../assets/icon-svg/cascione.svg";
 
-interface PaninoHeaderProps {
+interface CascioniHeaderProps {
   backgroundImage?: string;
 }
 
-const PaninoHeader: React.FC<PaninoHeaderProps> = ({ backgroundImage }) => {
+const CascioneHeader: React.FC<CascioniHeaderProps> = ({ backgroundImage }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: -50 }}
@@ -39,12 +39,12 @@ const PaninoHeader: React.FC<PaninoHeaderProps> = ({ backgroundImage }) => {
             style={{ fontFamily: "Hoverage, sans-serif" }}
             className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight drop-shadow-lg"
           >
-            PANINI
+            CASCIONI
           </h1>
 
           <img
-            src={paninoIcon}
-            alt="Icona Panino"
+            src={cascioneIcon}
+            alt="Icona Cascione"
             width={80}
             height={80}
             className="object-contain mx-auto"
@@ -55,4 +55,4 @@ const PaninoHeader: React.FC<PaninoHeaderProps> = ({ backgroundImage }) => {
   );
 };
 
-export default PaninoHeader;
+export default CascioneHeader;
