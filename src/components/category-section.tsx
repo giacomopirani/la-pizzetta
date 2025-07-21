@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import cascioneMain from "../assets/icon-svg/cascione.svg";
 import frittiMain from "../assets/icon-svg/fritti.svg";
@@ -6,67 +8,71 @@ import paniniMain from "../assets/icon-svg/panini.svg";
 import piadineMain from "../assets/icon-svg/piadine.svg";
 import pizzeMain from "../assets/icon-svg/pizza.svg";
 
-import { useRef } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
 const categories = [
-  {
-    mainIcon: pizzeMain,
-    label: "PIZZE",
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
-    route: "/pizze",
-  },
+  { mainIcon: pizzeMain, label: "PIZZE", description: "...", route: "/pizze" },
   {
     mainIcon: paniniMain,
     label: "PANINI",
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    description: "...",
     route: "/panini",
   },
   {
     mainIcon: cascioneMain,
     label: "CASCIONI",
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    description: "...",
     route: "/cascioni",
   },
   {
     mainIcon: piadineMain,
     label: "PIADINE",
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    description: "...",
     route: "/piadine",
   },
   {
     mainIcon: frittiMain,
     label: "FRITTI",
-    description:
-      "Nisl quam vestibulum ac quam nec au gula Orci variusNisl quam nesti.",
+    description: "...",
     route: "/fritti",
   },
 ];
 
 const CategorySection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<HTMLDivElement[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const scroll = (direction: "left" | "right") => {
-    if (containerRef.current) {
-      const amount = direction === "left" ? -300 : 300;
-      containerRef.current.scrollBy({ left: amount, behavior: "smooth" });
+  const scrollToCategory = (index: number) => {
+    const el = itemRefs.current[index];
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     }
   };
 
-  const handleCategoryClick = (route: string) => {
+  const handleArrowClick = (direction: "left" | "right") => {
+    const newIndex =
+      direction === "left"
+        ? Math.max(0, selectedIndex - 1)
+        : Math.min(categories.length - 1, selectedIndex + 1);
+    setSelectedIndex(newIndex);
+    scrollToCategory(newIndex);
+  };
+
+  const handleCategoryClick = (index: number, route: string) => {
+    setSelectedIndex(index);
+    scrollToCategory(index);
     navigate(route);
   };
 
   return (
-    <section className="bg-black text-white py-18 relative overflow-hidden">
+    <section className="bg-black text-white py-32 min-h-[700px] relative overflow-hidden">
       <div className="text-center mb-6">
         <h2 className="text-4xl font-bold uppercase">Scegli la categoria</h2>
-        <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded"></div>
+        <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded" />
       </div>
 
       <motion.button
@@ -74,7 +80,7 @@ const CategorySection = () => {
         animate={{ y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 1.5 }}
         className="absolute left-4 top-1/2 -translate-y-1/2 bg-white text-black p-3 rounded-full shadow z-10 cursor-pointer"
-        onClick={() => scroll("left")}
+        onClick={() => handleArrowClick("left")}
       >
         <FaChevronLeft />
       </motion.button>
@@ -84,30 +90,41 @@ const CategorySection = () => {
         animate={{ y: [0, -5, 0] }}
         transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
         className="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-black p-3 rounded-full shadow z-10 cursor-pointer"
-        onClick={() => scroll("right")}
+        onClick={() => handleArrowClick("right")}
       >
         <FaChevronRight />
       </motion.button>
 
       <div
         ref={containerRef}
-        className="flex gap-8 pt-6 px-8 mr-6 ml-6 overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
+        className="flex gap-8 py-5 pt-6 px-26 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-smooth"
       >
         {categories.map((cat, index) => (
           <motion.div
             key={index}
-            className="text-center max-w-[250px] flex-shrink-0"
+            ref={(el) => {
+              if (el) itemRefs.current[index] = el;
+            }}
+            className={`text-center max-w-[250px] flex-shrink-0 cursor-pointer transition-all duration-300 ${
+              selectedIndex === index ? "scale-110 ring-4 ring-[#b19173]" : ""
+            }`}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
             whileHover={{ scale: 1.05 }}
-            onClick={() => handleCategoryClick(cat.route)}
+            onClick={() => handleCategoryClick(index, cat.route)}
           >
-            <div className="w-40 h-40 border-2 border-white rounded-full bg-[#777] flex items-center justify-center mb-4 mx-auto cursor-pointer">
+            <div
+              className={`w-40 h-40 border-2 rounded-full flex items-center justify-center mb-4 mx-auto transition-all duration-300 ${
+                selectedIndex === index
+                  ? "bg-[#b19173] border-white shadow-[0_0_25px_#b19173]"
+                  : "bg-[#777] border-white"
+              }`}
+            >
               <img
                 src={cat.mainIcon}
-                alt={`Categoria ${index + 1}`}
+                alt={`Categoria ${cat.label}`}
                 width={80}
                 height={80}
                 className="object-contain"
@@ -120,8 +137,6 @@ const CategorySection = () => {
             >
               {cat.label}
             </p>
-
-            <p className="text-sm mt-2 text-gray-300">{cat.description}</p>
           </motion.div>
         ))}
       </div>

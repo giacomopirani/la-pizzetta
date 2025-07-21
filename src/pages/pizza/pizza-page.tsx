@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { pizzaData, sectionTitles } from "../../data/pizza-data/pizza-data";
 import type { SectionKey } from "../../types/pizza-type/pizza-types";
 import AccordionSection from "./accordion-section";
@@ -14,14 +14,11 @@ interface PizzaPageProps {
 const PizzaPage: React.FC<PizzaPageProps> = ({ headerBackgroundImage }) => {
   const [openSection, setOpenSection] = useState<SectionKey>();
 
-  const toggleSection = useCallback(
-    (section: SectionKey) => {
-      setOpenSection(openSection !== section ? section : undefined);
-    },
-    [openSection]
-  );
+  const toggleSection = useCallback((section: SectionKey) => {
+    setOpenSection((prev) => (prev !== section ? section : undefined));
+  }, []);
 
-  const sectionKeys = useMemo(() => Object.keys(pizzaData) as SectionKey[], []);
+  const sectionKeys = Object.keys(pizzaData) as SectionKey[];
 
   return (
     <div className="min-h-screen bg-white">

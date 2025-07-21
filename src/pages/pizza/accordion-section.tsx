@@ -40,7 +40,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
             ? "0 20px 40px -12px rgba(0, 0, 0, 0.6)"
             : "0 8px 20px -5px rgba(0, 0, 0, 0.3)",
         }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }}
       >
         {/* Glow effect di background */}
         <motion.div
