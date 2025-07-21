@@ -13,12 +13,10 @@ function App() {
   const [isAppLoading, setIsAppLoading] = useState(true);
 
   useEffect(() => {
-    // Simula il caricamento iniziale dell'app
-    const timer = setTimeout(() => setIsAppLoading(false), 2000);
+    const timer = setTimeout(() => setIsAppLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Mostra AppLoader solo al primo caricamento dell'app
   if (isAppLoading) return <AppLoader />;
 
   return (

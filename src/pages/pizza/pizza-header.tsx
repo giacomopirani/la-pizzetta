@@ -27,9 +27,14 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-center bg-black/50 backdrop-blur-sm rounded-lg p-8 inline-block"
+          className="text-center bg-[rgba(0,0,0,0.5)] backdrop-blur-sm rounded-lg p-8 inline-block"
         >
-          <p className="font-bold text-white border-b-2 mb-3 pb-2">MENU</p>
+          <p
+            className="font-bold text-white border-b-2 border-white/80 mb-3 pb-2"
+            style={{ borderColor: "rgba(255,255,255,0.8)" }}
+          >
+            MENU
+          </p>
           <h1
             style={{ fontFamily: "Hoverage, sans-serif" }}
             className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight drop-shadow-lg"

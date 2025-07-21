@@ -23,10 +23,10 @@ const HomePage = () => {
           <h1 className="text-4xl md:text-6xl font-bold mb-10">ORDINA QUI</h1>
           <div className="flex gap-4">
             <button className="bg-transparent hover:bg-[#d7b07d] text-white px-6 py-3 border border-white rounded-[3px] font-semibold transition cursor-pointer">
-              RISERVA UN TAVOLO
+              SCARICA L'APP
             </button>
             <button className="bg-transparent hover:border-b-2 border-white text-white px-6 py-3 rounded-[3px] font-semibold transition cursor-pointer">
-              MENU ONLINE
+              ORDINA SU xMenu
             </button>
           </div>
           <motion.div
