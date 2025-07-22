@@ -57,8 +57,8 @@ const HomePage = () => {
             Dove ogni{" "}
             <span style={{ fontFamily: "Hoverage, sans-serif" }}>
               “Pizzetta”
-            </span>{" "}
-            è fatta con amore.
+            </span>
+            <br />è fatta con amore.
           </motion.h1>
 
           <motion.div
