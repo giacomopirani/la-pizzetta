@@ -5,6 +5,7 @@ import AppLoader from "./components/loaders/app-loader";
 import Navbar from "./components/navbar";
 import PageTransitionWrapper from "./components/page-transition-wrapper";
 
+import MapSection from "./components/map-section";
 import { AppLoadingProvider } from "./context/app-loading-context";
 import CascioniPage from "./pages/cascioni/cascioni-page";
 import FrittiPage from "./pages/fritti/fritti-page";
@@ -39,6 +40,7 @@ function App() {
           </Routes>
         </PageTransitionWrapper>
 
+        <MapSection />
         <Footer />
       </Router>
     </AppLoadingProvider>
