@@ -1,53 +1,127 @@
-import { motion } from "motion/react";
-import { FaChevronDown } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaAppStoreIos, FaChevronDown, FaGooglePlay } from "react-icons/fa";
 import logoPizzetta from "../assets/logo-pizzeria.png";
 import pizzeriaImage from "../assets/pizzeria.png";
 import CategorySection from "../components/category-section";
 
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+    },
+  },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const HomePage = () => {
   return (
     <>
-      <div
-        className="h-screen bg-cover bg-center relative inset-0 bg-black opacity-80 pt-20 "
+      {/* Sfondo animato con leggera transizione */}
+      <motion.div
+        className="h-screen bg-cover bg-center relative inset-0 pt-20"
         style={{ backgroundImage: `url(${pizzeriaImage})` }}
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
       >
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-25">
-          <img
+        {/* Contenuto centrale con animazioni a cascata */}
+        <motion.div
+          className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-14"
+          variants={container}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.img
             src={logoPizzetta}
             alt="Logo Pizzeria"
-            className="w-40 h-auto mx-auto mb-4"
+            className="w-40 h-auto mx-auto mb-4 drop-shadow-lg"
+            variants={fadeUp}
           />
-          <p className="uppercase text-xl tracking-wide mb-6 pt-1 border-t border-[#d7b07d]">
-            HELLO, NEW FRIEND
-          </p>
-          <h1 className="text-4xl md:text-6xl font-bold mb-10">ORDINA QUI</h1>
-          <div className="flex gap-4">
-            <button className="bg-transparent hover:bg-[#d7b07d] text-white px-6 py-3 border border-white rounded-[3px] font-semibold transition cursor-pointer">
-              SCARICA L'APP
-            </button>
-            <button className="bg-transparent hover:border-b-2 border-white text-white px-6 py-3 rounded-[3px] font-semibold transition cursor-pointer">
-              ORDINA SU xMenu
-            </button>
-          </div>
+
+          <motion.p
+            className="uppercase text-xl tracking-wide mb-4 border-t-4 border-[#d7b07d] pt-2"
+            variants={fadeUp}
+          >
+            HELLO
+          </motion.p>
+
+          <motion.h1
+            className="text-3xl md:text-4xl font-bold mb-8 leading-snug"
+            variants={fadeUp}
+          >
+            Dove ogni{" "}
+            <span style={{ fontFamily: "Hoverage, sans-serif" }}>
+              “Pizzetta”
+            </span>{" "}
+            è fatta con amore.
+          </motion.h1>
+
           <motion.div
-            className="mt-16 text-[#AA9782]"
-            animate={{
-              y: [0, 15, 0],
-              opacity: [1, 0.6, 1],
-              scale: [1, 1.1, 1],
-            }}
+            className="flex flex-col items-center gap-2 text-white mb-8"
+            variants={fadeUp}
+          >
+            <p className="text-sm font-semibold">
+              SCARICA L'APP <br />
+              <span className="text-sm font-normal">
+                5€ di sconto sul tuo primo ordine
+              </span>
+            </p>
+
+            <div className="flex gap-4 mt-2">
+              <motion.a
+                href="https://apps.apple.com/it/app/la-pizzetta/id1376665567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-white/10 hover:bg-[#d7b07d] text-white px-5 py-3 border border-white rounded-[5px] font-semibold transition-all backdrop-blur-md"
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaAppStoreIos size={20} />
+                App Store
+              </motion.a>
+
+              <motion.a
+                href="https://play.google.com/store/apps/details?id=it.xmenu.pizzetta&hl=it&pli=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-white/10 hover:bg-[#d7b07d] text-white px-5 py-3 border border-white rounded-[5px] font-semibold transition-all backdrop-blur-md"
+                whileHover={{ scale: 1.05 }}
+              >
+                <FaGooglePlay size={20} />
+                Play Store
+              </motion.a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="mt-2 text-[#AA9782]"
+            animate={{ y: [0, 15, 0], opacity: [1, 0.6, 1] }}
             transition={{
               repeat: Infinity,
-              repeatType: "loop",
               duration: 2.5,
               ease: "easeInOut",
             }}
           >
-            <FaChevronDown size={100} />
+            <FaChevronDown size={60} />
           </motion.div>
-        </div>
-      </div>
-      <CategorySection />
+        </motion.div>
+      </motion.div>
+
+      {/* Sezione successiva */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+      >
+        <CategorySection />
+      </motion.div>
     </>
   );
 };
