@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import cascioneMain from "../assets/icon-svg/cascione.svg";
 import frittiMain from "../assets/icon-svg/fritti.svg";
@@ -9,12 +9,7 @@ import piadineMain from "../assets/icon-svg/piadine.svg";
 import pizzeMain from "../assets/icon-svg/pizza.svg";
 
 const categories = [
-  {
-    mainIcon: pizzeMain,
-    label: "PIZZE",
-    description: "...",
-    route: "/pizze",
-  },
+  { mainIcon: pizzeMain, label: "PIZZE", description: "...", route: "/pizze" },
   {
     mainIcon: paniniMain,
     label: "PANINI",
@@ -44,107 +39,298 @@ const categories = [
 const CategorySection = () => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<HTMLDivElement[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [showArrows, setShowArrows] = useState(false);
 
-  const scrollToCategory = (index: number) => {
-    const el = itemRefs.current[index];
-    if (el) {
-      el.scrollIntoView({
+  const handleCategoryClick = (index: number, route: string) => {
+    setClickedIndex(index);
+
+    setTimeout(() => {
+      setClickedIndex(null);
+      navigate(route);
+    }, 400);
+  };
+
+  const checkScrollPosition = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px tolerance
+    }
+  };
+
+  const scrollToDirection = (direction: "left" | "right") => {
+    if (containerRef.current) {
+      const scrollAmount = 300;
+      const currentScroll = containerRef.current.scrollLeft;
+      const targetScroll =
+        direction === "left"
+          ? currentScroll - scrollAmount
+          : currentScroll + scrollAmount;
+
+      containerRef.current.scrollTo({
+        left: targetScroll,
         behavior: "smooth",
-        inline: "center",
-        block: "nearest",
       });
     }
   };
 
-  const handleArrowClick = (direction: "left" | "right") => {
-    const newIndex =
-      direction === "left"
-        ? Math.max(0, selectedIndex - 1)
-        : Math.min(categories.length - 1, selectedIndex + 1);
-    setSelectedIndex(newIndex);
-    scrollToCategory(newIndex);
-  };
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      // Check initial scroll position
+      checkScrollPosition();
 
-  const handleCategoryClick = (index: number, route: string) => {
-    setSelectedIndex(index);
-    scrollToCategory(index);
-    navigate(route);
-  };
+      // Check if content overflows (needs scrolling)
+      const needsScroll = container.scrollWidth > container.clientWidth;
+      setShowArrows(needsScroll);
+
+      // Add scroll event listener
+      container.addEventListener("scroll", checkScrollPosition);
+
+      // Add resize listener to recheck on window resize
+      const handleResize = () => {
+        const needsScroll = container.scrollWidth > container.clientWidth;
+        setShowArrows(needsScroll);
+        checkScrollPosition();
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => {
+        container.removeEventListener("scroll", checkScrollPosition);
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  }, []);
 
   return (
-    <section className="bg-black text-white py-28 min-h-[600px] relative overflow-hidden">
+    <section className="bg-black text-white py-24 min-h-[500px] relative overflow-hidden">
       <div className="text-center mb-6">
-        <h2 className="text-4xl font-bold uppercase">scegli la categoria</h2>
-        <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded" />
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold uppercase"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          scegli la categoria
+        </motion.h2>
+        <motion.div
+          className="mt-3 h-1.5 w-32 bg-[#b19173] mx-auto rounded"
+          initial={{ width: 0 }}
+          whileInView={{ width: 128 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
       </div>
 
-      <motion.button
-        whileHover={{ scale: 1.2 }}
-        animate={{ y: [0, -5, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white text-black p-3 rounded-full shadow z-10 cursor-pointer"
-        onClick={() => handleArrowClick("left")}
-      >
-        <FaChevronLeft />
-      </motion.button>
-
-      <motion.button
-        whileHover={{ scale: 1.2 }}
-        animate={{ y: [0, -5, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5, delay: 0.2 }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-black p-3 rounded-full shadow z-10 cursor-pointer"
-        onClick={() => handleArrowClick("right")}
-      >
-        <FaChevronRight />
-      </motion.button>
-
-      <div
+      {/* Categories Container */}
+      <motion.div
         ref={containerRef}
-        className="flex items-center gap-8 py-5 mt-4 px-26 mx-auto max-w-7xl overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth"
+        className="flex items-center gap-6 py-4 mt-6 px-4 md:px-16 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-snap-x snap-mandatory"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.15,
+            },
+          },
+        }}
       >
-        {categories.map((cat, index) => (
-          <motion.div
-            key={index}
-            ref={(el) => {
-              if (el) itemRefs.current[index] = el;
-            }}
-            className={`text-center max-w-[250px] flex-shrink-0 cursor-pointer transition-all duration-300 ${
-              selectedIndex === index ? "scale-110 ring-4 ring-[#b19173]" : ""
-            }`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => handleCategoryClick(index, cat.route)}
-          >
-            <div
-              className={`w-40 h-40 border-2 rounded-full flex items-center justify-center mb-4 mx-auto transition-all duration-300 ${
-                selectedIndex === index
-                  ? "bg-[#b19173] border-white shadow-[0_0_25px_#b19173]"
-                  : "bg-[#777] border-white"
-              }`}
+        {categories.map((cat, index) => {
+          const isClicked = clickedIndex === index;
+
+          return (
+            <motion.div
+              key={index}
+              className="snap-center text-center max-w-[180px] md:max-w-[250px] flex-shrink-0 cursor-pointer"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              whileHover={{
+                y: -5,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCategoryClick(index, cat.route)}
             >
-              <img
-                src={cat.mainIcon}
-                alt={`Categoria ${cat.label}`}
-                width={80}
-                height={80}
-                className="object-contain"
+              {/* Main category circle */}
+              <motion.div
+                className="w-32 h-32 md:w-40 md:h-40 border-2 border-white rounded-full flex items-center justify-center mb-3 mx-auto relative overflow-hidden"
+                animate={{
+                  backgroundColor: isClicked ? "#b19173" : "#777",
+                  scale: isClicked ? [1, 1.1, 1.05] : 1,
+                  boxShadow: isClicked
+                    ? "0 0 30px rgba(177, 145, 115, 0.8), 0 0 60px rgba(177, 145, 115, 0.4)"
+                    : "none",
+                }}
+                transition={{
+                  duration: isClicked ? 0.4 : 0.3,
+                  ease: "easeOut",
+                }}
+              >
+                {/* Ripple effect */}
+                {isClicked && (
+                  <motion.div
+                    className="absolute inset-0 bg-[#b19173] rounded-full"
+                    initial={{ scale: 0, opacity: 0.8 }}
+                    animate={{
+                      scale: [0, 1.5, 2],
+                      opacity: [0.8, 0.3, 0],
+                    }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  />
+                )}
+
+                <motion.img
+                  src={cat.mainIcon}
+                  alt={`Categoria ${cat.label}`}
+                  width={60}
+                  height={60}
+                  className="object-contain relative z-10"
+                  animate={{
+                    scale: isClicked ? [1, 1.2, 1.1] : 1,
+                    rotate: isClicked ? [0, 5, -5, 0] : 0,
+                    filter: isClicked
+                      ? "brightness(1.3) drop-shadow(0 0 10px rgba(255,255,255,0.7))"
+                      : "brightness(1)",
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeOut",
+                  }}
+                />
+              </motion.div>
+
+              {/* Category label */}
+              <motion.p
+                style={{ fontFamily: "Hoverage, sans-serif", fontSize: "22px" }}
+                className="mx-auto text-center text-[#AA9782]"
+                animate={{
+                  color: isClicked ? "#ffffff" : "#AA9782",
+                  scale: isClicked ? [1, 1.1, 1.05] : 1,
+                }}
+                transition={{
+                  duration: 0.4,
+                  ease: "easeOut",
+                }}
+              >
+                {cat.label}
+              </motion.p>
+
+              {/* Burst effect particles */}
+              {isClicked && (
+                <>
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-[#b19173] rounded-full"
+                      style={{
+                        left: "50%",
+                        top: "50%",
+                      }}
+                      initial={{
+                        scale: 0,
+                        x: 0,
+                        y: 0,
+                        opacity: 1,
+                      }}
+                      animate={{
+                        scale: [0, 1, 0],
+                        x: Math.cos((i * Math.PI * 2) / 8) * 60,
+                        y: Math.sin((i * Math.PI * 2) / 8) * 60,
+                        opacity: [1, 1, 0],
+                      }}
+                      transition={{
+                        duration: 0.5,
+                        ease: "easeOut",
+                        delay: 0.1,
+                      }}
+                    />
+                  ))}
+                </>
+              )}
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Navigation Controls - Arrows + Dots on same line */}
+      <AnimatePresence>
+        {showArrows && (
+          <motion.div
+            className="flex items-center justify-center mt-6 gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Left Arrow */}
+            <AnimatePresence>
+              {canScrollLeft ? (
+                <motion.button
+                  className="bg-[#b19173] hover:bg-[#9d7f63] text-white p-2 rounded-full shadow-lg transition-colors duration-200"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => scrollToDirection("left")}
+                  aria-label="Scorri verso sinistra"
+                >
+                  <FaArrowAltCircleLeft size={20} />
+                </motion.button>
+              ) : (
+                <div className="w-9 h-9" />
+              )}
+            </AnimatePresence>
+
+            {/* Dots Indicators */}
+            <div className="flex gap-3">
+              <motion.div
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                  canScrollLeft ? "bg-[#b19173]" : "bg-gray-600"
+                }`}
+                animate={{ scale: canScrollLeft ? 1.2 : 1 }}
+              />
+              <motion.div
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                  canScrollRight ? "bg-[#b19173]" : "bg-gray-600"
+                }`}
+                animate={{ scale: canScrollRight ? 1.2 : 1 }}
               />
             </div>
 
-            <p
-              style={{ fontFamily: "Hoverage, sans-serif", fontSize: "28px" }}
-              className="mx-auto text-center text-[#AA9782]"
-            >
-              {cat.label}
-            </p>
+            {/* Right Arrow */}
+            <AnimatePresence>
+              {canScrollRight ? (
+                <motion.button
+                  className="bg-[#b19173] hover:bg-[#9d7f63] text-white p-2 rounded-full shadow-lg transition-colors duration-200"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => scrollToDirection("right")}
+                  aria-label="Scorri verso destra"
+                >
+                  <FaArrowAltCircleRight size={20} />
+                </motion.button>
+              ) : (
+                <div className="w-9 h-9" />
+              )}
+            </AnimatePresence>
           </motion.div>
-        ))}
-      </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

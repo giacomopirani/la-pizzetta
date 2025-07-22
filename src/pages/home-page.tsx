@@ -23,7 +23,6 @@ const fadeUp = {
 const HomePage = () => {
   return (
     <>
-      {/* Sfondo animato con leggera transizione */}
       <motion.div
         className="h-screen bg-cover bg-center relative inset-0 pt-20"
         style={{ backgroundImage: `url(${pizzeriaImage})` }}
@@ -31,7 +30,6 @@ const HomePage = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        {/* Contenuto centrale con animazioni a cascata */}
         <motion.div
           className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-14"
           variants={container}
@@ -113,7 +111,6 @@ const HomePage = () => {
         </motion.div>
       </motion.div>
 
-      {/* Sezione successiva */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
