@@ -3,7 +3,7 @@ import type { Piadina } from "../../types/piadine-type/piadine-types";
 export const piadineClassiche: Piadina[] = [
   { title: "PROSCIUTTO CRUDO", price: "€ 6,50" },
   { title: "PROSCIUTTO CRUDO E MOZZARELLA", price: "€ 7,50" },
-  { title: "PROSCIUTTO CRUDO, STRACCHINO, RUCOLA", price: "€ 7,50" },
+  { title: "PROSCIUTTO CRUDO, STRACCHINO,\n RUCOLA", price: "€ 7,50" },
   { title: "PROSCIUTTO CRUDO E INSALATA", price: "€ 7,00" },
   { title: "GRATINATI", price: "€ 7,50" },
   { title: "ERBE E SALSICCIA", price: "€ 7,50" },
@@ -17,15 +17,15 @@ export const piadineClassiche: Piadina[] = [
 
 export const piadineSpeciali: Piadina[] = [
   {
-    title: "PROSCIUTTO CRUDO, PECORINO E INSALATA",
+    title: "PROSCIUTTO CRUDO, PECORINO\nE INSALATA",
     price: "€ 8,00",
   },
   {
-    title: "SPECK, GORGONZOLA E FUNGHI TRIFOLATI",
+    title: "SPECK, GORGONZOLA\nE FUNGHI TRIFOLATI",
     price: "€ 8,00",
   },
   {
-    title: "SALSICCIA, PECORINO E GRATE’",
+    title: "SALSICCIA, PECORINO\nE GRATE’",
     price: "€ 8,50",
   },
   {
@@ -37,11 +37,11 @@ export const piadineSpeciali: Piadina[] = [
     price: "€ 7,50",
   },
   {
-    title: "SALAME PICCANTE, CARCIOFI E MAIONESE",
+    title: "SALAME PICCANTE, CARCIOFI\nE MAIONESE",
     price: "€ 7,00",
   },
   {
-    title: "PORCHETTA, INSALATA E PECORINO",
+    title: "PORCHETTA, INSALATA\nE PECORINO",
     price: "€ 8,00",
   },
   {
