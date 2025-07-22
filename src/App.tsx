@@ -7,6 +7,7 @@ import PageTransitionWrapper from "./components/page-transition-wrapper";
 
 import { AppLoadingProvider } from "./context/app-loading-context";
 import CascioniPage from "./pages/cascioni/cascioni-page";
+import FrittiPage from "./pages/fritti/fritti-page";
 import HomePage from "./pages/home-page";
 import PaniniPage from "./pages/panini/panini-page";
 import PiadinePage from "./pages/piadine/piadine-page";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/panini" element={<PaniniPage />} />
             <Route path="/cascioni" element={<CascioniPage />} />
             <Route path="/piadine" element={<PiadinePage />} />
+            <Route path="/fritti" element={<FrittiPage />} />
           </Routes>
         </PageTransitionWrapper>
 

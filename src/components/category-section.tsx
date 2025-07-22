@@ -76,7 +76,7 @@ const CategorySection = () => {
   return (
     <section className="bg-black text-white py-28 min-h-[600px] relative overflow-hidden">
       <div className="text-center mb-6">
-        <h2 className="text-4xl font-bold uppercase">I nostri menù</h2>
+        <h2 className="text-4xl font-bold uppercase">scegli la categoria</h2>
         <div className="mt-4 h-2 w-40 bg-[#b19173] mx-auto rounded" />
       </div>
 
