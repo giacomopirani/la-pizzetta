@@ -19,9 +19,14 @@ const Navbar = () => {
           <Link to="/piadine">Piadine</Link>
           <Link to="/fritti">Fritti</Link>
         </div>
-        <button className="bg-[#AA9782] text-white px-4 py-2 rounded-[3px] font-medium text-sm hover:bg-[#846945] transition-colors">
-          RESERVATION
-        </button>
+        <a
+          href="https://lapizzettacattolica.xmenu.it/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#AA9782] text-white px-4 py-2 rounded-[3px] font-medium text-sm hover:bg-[#846945] transition-colors"
+        >
+          ORDINA
+        </a>
       </div>
     </nav>
   );

@@ -184,7 +184,7 @@ const CategorySection = () => {
                       scale: [0, 1.5, 2],
                       opacity: [0.8, 0.3, 0],
                     }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
                   />
                 )}
 
@@ -285,7 +285,7 @@ const CategorySection = () => {
                   onClick={() => scrollToDirection("left")}
                   aria-label="Scorri verso sinistra"
                 >
-                  <FaArrowAltCircleLeft size={20} />
+                  <FaArrowAltCircleLeft size={24} />
                 </motion.button>
               ) : (
                 <div className="w-9 h-9" />
@@ -322,7 +322,7 @@ const CategorySection = () => {
                   onClick={() => scrollToDirection("right")}
                   aria-label="Scorri verso destra"
                 >
-                  <FaArrowAltCircleRight size={20} />
+                  <FaArrowAltCircleRight size={24} />
                 </motion.button>
               ) : (
                 <div className="w-9 h-9" />
