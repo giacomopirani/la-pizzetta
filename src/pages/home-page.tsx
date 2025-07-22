@@ -31,7 +31,7 @@ const HomePage = () => {
         transition={{ duration: 1, ease: "easeOut" }}
       >
         <motion.div
-          className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-14"
+          className="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4 pt-12"
           variants={container}
           initial="hidden"
           animate="visible"
