@@ -1,5 +1,6 @@
 import L, { type LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { motion } from "motion/react";
 import { SiGooglemaps } from "react-icons/si";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import markerIconPiazzetta from "../assets/logo-pizzeria.png";
@@ -11,14 +12,30 @@ const locationPizzeria = "Via Giuseppe di Vittorio, 9, 47841 Cattolica RN";
 const customIcon = new L.Icon({
   iconUrl: markerIconPiazzetta,
   iconSize: [90, 80],
-  iconAnchor: [45, 80],
+  iconAnchor: [10, 80],
   popupAnchor: [0, -80],
   className: "cursor-pointer",
 });
 
 const MapSection = () => {
   return (
-    <section className="w-full flex flex-col items-center space-y-4 pb-6">
+    <section className="w-full flex flex-col items-center space-y-4 pb-6 border-t-amber-50 border-1">
+      <div className="text-center mb-6 mt-14">
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold uppercase text-white"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          dove siamo
+        </motion.h2>
+        <motion.div
+          className="mt-3 h-1.5 w-32 bg-[#b19173] mx-auto rounded"
+          initial={{ width: 0 }}
+          whileInView={{ width: 128 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+      </div>
       {/* Mappa */}
       <div className="w-full border border-gray-200 shadow-md overflow-hidden">
         <MapContainer

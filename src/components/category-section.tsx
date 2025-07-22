@@ -128,7 +128,7 @@ const CategorySection = () => {
       {/* Categories Container */}
       <motion.div
         ref={containerRef}
-        className="flex items-center gap-6 py-4 mt-6 px-4 md:px-16 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-snap-x snap-mandatory"
+        className="flex justify-center items-center gap-6 py-4 mt-6 px-4 md:px-16 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-snap-x snap-mandatory"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
