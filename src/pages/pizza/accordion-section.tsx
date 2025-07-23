@@ -25,14 +25,14 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
         return "black";
       }
       if (sectionKey === "giganti") {
-        return "from-gray-700 to-gray-800";
+        return "black";
       }
       return "black";
     };
 
     return (
       <motion.div
-        className="mb-6 bg-black rounded-xl overflow-hidden border border-gray-800 relative"
+        className="mb-6 bg-black rounded-xl overflow-hidden border border-[#AA9782] relative"
         initial={false}
         animate={{
           scale: isOpen ? 1.01 : 1,

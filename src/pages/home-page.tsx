@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { FaAppStoreIos, FaChevronDown, FaGooglePlay } from "react-icons/fa";
-import pizzeriaImage from "../assets/home3.jpg";
+import pizzeriaImage from "../assets/home4.jpg";
 import logoPizzetta from "../assets/logo-pizzeria.png";
 import CategorySection from "../components/category-section";
 

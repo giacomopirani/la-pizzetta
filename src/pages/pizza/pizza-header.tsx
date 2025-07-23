@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import React from "react";
-import pizzaIcon from "../../assets/icon-svg/pizza.svg";
 
 interface PizzaHeaderProps {
   backgroundImage?: string;
@@ -12,7 +11,7 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative py-26 overflow-hidden min-h-[400px] flex items-end justify-center pb-8"
+      className="relative py-26 overflow-hidden min-h-[400px] flex items-end justify-center pb-0"
       style={{
         backgroundImage: backgroundImage
           ? `url(${backgroundImage})`
@@ -27,7 +26,7 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-center bg-[rgba(0,0,0,0.5)] backdrop-blur-sm rounded-lg p-8 inline-block"
+          className="text-center bg-[rgba(0,0,0,0.6)] backdrop-blur-sm rounded-lg p-2 px-27 inline-block"
         >
           <p
             className="font-bold text-white border-b-2 border-white/80 mb-3 pb-2"
@@ -37,18 +36,10 @@ const PizzaHeader: React.FC<PizzaHeaderProps> = ({ backgroundImage }) => {
           </p>
           <h1
             style={{ fontFamily: "Hoverage, sans-serif" }}
-            className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight drop-shadow-lg"
+            className="text-5xl md:text-6xl font-bold text-white tracking-tight drop-shadow-lg"
           >
             PIZZE
           </h1>
-
-          <img
-            src={pizzaIcon}
-            alt="Icona Pizza"
-            width={80}
-            height={80}
-            className="object-contain mx-auto"
-          />
         </motion.div>
       </div>
     </motion.div>
