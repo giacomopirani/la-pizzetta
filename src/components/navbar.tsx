@@ -36,10 +36,10 @@ const Navbar = () => {
           {/* Bottone telefono */}
           <a
             href="tel:+3905411491541"
-            className="flex items-center gap-2 bg-green-600 ml-4 px-3 py-2 rounded-[3px] text-sm font-medium hover:bg-green-800 transition-colors"
+            className="flex items-center gap-2 bg-green-600 px-4 h-[36px] rounded-[3px] text-sm font-medium hover:bg-green-800 transition-colors"
           >
             <FiPhone className="text-white" />
-            <span className="text-white">Chiama</span>
+            <span className="text-white hidden md:inline">Chiama</span>
           </a>
 
           {/* Pulsante ordina */}

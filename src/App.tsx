@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
@@ -45,6 +46,8 @@ function AppContent() {
           <Route path="/cascioni" element={<CascioniPage />} />
           <Route path="/piadine" element={<PiadinePage />} />
           <Route path="/fritti" element={<FrittiPage />} />
+          {/* Route path per percorsi non validi */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </PageTransitionWrapper>
 
