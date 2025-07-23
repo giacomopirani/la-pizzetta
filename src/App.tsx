@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import BottomNav from "./components/bottom-nav";
 import Footer from "./components/footer";
 import AppLoader from "./components/loaders/app-loader";
 import Navbar from "./components/navbar";
@@ -14,6 +20,42 @@ import PaniniPage from "./pages/panini/panini-page";
 import PiadinePage from "./pages/piadine/piadine-page";
 import PizzaPage from "./pages/pizza/pizza-page";
 
+function AppContent() {
+  const location = useLocation();
+
+  // Lista delle pagine che devono mostrare la BottomNav
+  const showBottomNavPaths = [
+    "/pizze",
+    "/panini",
+    "/cascioni",
+    "/piadine",
+    "/fritti",
+  ];
+  const showBottomNav = showBottomNavPaths.includes(location.pathname);
+
+  return (
+    <>
+      <Navbar />
+
+      <PageTransitionWrapper>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/pizze" element={<PizzaPage />} />
+          <Route path="/panini" element={<PaniniPage />} />
+          <Route path="/cascioni" element={<CascioniPage />} />
+          <Route path="/piadine" element={<PiadinePage />} />
+          <Route path="/fritti" element={<FrittiPage />} />
+        </Routes>
+      </PageTransitionWrapper>
+
+      {showBottomNav && <BottomNav />}
+
+      <MapSection />
+      <Footer />
+    </>
+  );
+}
+
 function App() {
   const [isAppLoading, setIsAppLoading] = useState(true);
 
@@ -27,21 +69,7 @@ function App() {
   return (
     <AppLoadingProvider hasAppLoaded={!isAppLoading}>
       <Router>
-        <Navbar />
-
-        <PageTransitionWrapper>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/pizze" element={<PizzaPage />} />
-            <Route path="/panini" element={<PaniniPage />} />
-            <Route path="/cascioni" element={<CascioniPage />} />
-            <Route path="/piadine" element={<PiadinePage />} />
-            <Route path="/fritti" element={<FrittiPage />} />
-          </Routes>
-        </PageTransitionWrapper>
-
-        <MapSection />
-        <Footer />
+        <AppContent />
       </Router>
     </AppLoadingProvider>
   );

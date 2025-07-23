@@ -26,7 +26,7 @@ const FrittoHeader: React.FC<FrittiHeaderProps> = ({ backgroundImage }) => {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-center bg-[rgba(0,0,0,0.5)] backdrop-blur-sm rounded-t-lg p-2 px-27 inline-block"
+          className="text-center bg-[rgba(0,0,0,0.5)] backdrop-blur-sm rounded-t-lg p-2 px-24 inline-block"
         >
           <p
             className="font-bold text-white border-b-2 border-white/80 mb-3 pb-2"

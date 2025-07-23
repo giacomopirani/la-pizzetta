@@ -23,3 +23,12 @@
 body {
   background-color: #000;
 }
+
+.svg-white {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.svg-beige {
+  filter: brightness(0) saturate(100%) invert(85%) sepia(15%) saturate(1217%)
+    hue-rotate(16deg) brightness(96%) contrast(88%);
+}
