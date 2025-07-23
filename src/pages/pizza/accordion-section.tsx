@@ -258,19 +258,15 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
 
                 {sectionKey === "speciali" && (
                   <motion.div
-                    className="bg-yellow-600 rounded-lg p-4 mb-6 border border-red-500/20"
+                    className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-white"
                     initial={{ scale: 0.95, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.2 }}
                   >
                     <h4 className="text-white font-bold mb-2  tracking-wide">
-                      ⭐ Le nostre specialità della casa con ingredienti
-                      selezionati!
+                      * Base <span className="text-red-700">Pomodoro</span> e
+                      Mozzarella
                     </h4>
-                    <p className="text-white text-sm">
-                      * Base <span className="text-red-700">POMODORO</span> e
-                      MOZZARELLA
-                    </p>
                   </motion.div>
                 )}
 
