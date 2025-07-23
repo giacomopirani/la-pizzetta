@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FaAppStoreIos, FaChevronDown, FaGooglePlay } from "react-icons/fa";
+import pizzeriaImage from "../assets/home3.jpg";
 import logoPizzetta from "../assets/logo-pizzeria.png";
-import pizzeriaImage from "../assets/pizzeria.png";
 import CategorySection from "../components/category-section";
 
 const container = {
@@ -65,9 +65,9 @@ const HomePage = () => {
             className="flex flex-col items-center gap-2 text-white mb-8"
             variants={fadeUp}
           >
-            <p className="text-sm font-semibold">
+            <p className="text-md font-bold">
               SCARICA L'APP <br />
-              <span className="text-sm font-normal">
+              <span className="text-md font-bold">
                 5€ di sconto sul tuo primo ordine
               </span>
             </p>
