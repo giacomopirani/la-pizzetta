@@ -36,7 +36,7 @@ const PaninoHeader: React.FC<PaninoHeaderProps> = ({ backgroundImage }) => {
           </p>
           <h1
             style={{ fontFamily: "Hoverage, sans-serif" }}
-            className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight drop-shadow-lg"
+            className="text-5xl md:text-6xl font-bold text-white tracking-tight drop-shadow-lg"
           >
             PANINI
           </h1>
