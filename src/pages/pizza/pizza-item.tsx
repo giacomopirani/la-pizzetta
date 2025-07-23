@@ -11,7 +11,7 @@ interface PizzaItemProps {
 const PizzaItem: React.FC<PizzaItemProps> = React.memo(({ pizza, index }) => {
   const getBackgroundColor = () => {
     if (pizza.isSpecial) {
-      return "bg-gradient-to-r from-gray-800 to-gray-900 border-white";
+      return "bg-gray-700/30 border-gray-600/30";
     }
     return "bg-gray-700/30 border-gray-600/30";
   };
