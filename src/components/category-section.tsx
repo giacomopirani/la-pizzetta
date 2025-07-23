@@ -43,6 +43,7 @@ const CategorySection = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [showArrows, setShowArrows] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleCategoryClick = (index: number, route: string) => {
     setClickedIndex(index);
@@ -54,7 +55,7 @@ const CategorySection = () => {
   };
 
   const checkScrollPosition = () => {
-    if (containerRef.current) {
+    if (containerRef.current && isMobile) {
       const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10); // 10px tolerance
@@ -77,24 +78,47 @@ const CategorySection = () => {
     }
   };
 
+  const checkIfMobile = () => {
+    const mobile = window.innerWidth < 768; // md breakpoint
+    setIsMobile(mobile);
+    return mobile;
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
-      // Check initial scroll position
-      checkScrollPosition();
+      const mobile = checkIfMobile();
 
-      // Check if content overflows (needs scrolling)
-      const needsScroll = container.scrollWidth > container.clientWidth;
-      setShowArrows(needsScroll);
+      if (mobile) {
+        // Check initial scroll position for mobile
+        checkScrollPosition();
 
-      // Add scroll event listener
-      container.addEventListener("scroll", checkScrollPosition);
+        // Check if content overflows (needs scrolling) for mobile
+        const needsScroll = container.scrollWidth > container.clientWidth;
+        setShowArrows(needsScroll);
+
+        // Add scroll event listener for mobile
+        container.addEventListener("scroll", checkScrollPosition);
+      } else {
+        // For desktop, hide arrows since content is centered
+        setShowArrows(false);
+        setCanScrollLeft(false);
+        setCanScrollRight(false);
+      }
 
       // Add resize listener to recheck on window resize
       const handleResize = () => {
-        const needsScroll = container.scrollWidth > container.clientWidth;
-        setShowArrows(needsScroll);
-        checkScrollPosition();
+        const mobile = checkIfMobile();
+
+        if (mobile) {
+          const needsScroll = container.scrollWidth > container.clientWidth;
+          setShowArrows(needsScroll);
+          checkScrollPosition();
+        } else {
+          setShowArrows(false);
+          setCanScrollLeft(false);
+          setCanScrollRight(false);
+        }
       };
 
       window.addEventListener("resize", handleResize);
@@ -104,7 +128,7 @@ const CategorySection = () => {
         window.removeEventListener("resize", handleResize);
       };
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <section className="bg-black text-white py-24 min-h-[500px] relative overflow-hidden">
@@ -128,7 +152,12 @@ const CategorySection = () => {
       {/* Categories Container */}
       <motion.div
         ref={containerRef}
-        className="flex items-center gap-6 py-4 mt-6 px-4 md:px-16 mx-auto max-w-7xl overflow-x-auto no-scrollbar scroll-snap-x snap-mandatory"
+        className={`flex items-center gap-6 py-4 mt-6 px-4 md:px-16 mx-auto max-w-7xl
+          ${
+            isMobile
+              ? "overflow-x-auto no-scrollbar scroll-snap-x snap-mandatory"
+              : "justify-center overflow-visible"
+          }`}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -147,7 +176,9 @@ const CategorySection = () => {
           return (
             <motion.div
               key={index}
-              className="snap-center text-center max-w-[180px] md:max-w-[250px] flex-shrink-0 cursor-pointer"
+              className={`text-center max-w-[180px] md:max-w-[250px] cursor-pointer
+                ${isMobile ? "snap-center flex-shrink-0" : "flex-shrink-0"}
+              `}
               variants={{
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0 },
@@ -261,9 +292,9 @@ const CategorySection = () => {
         })}
       </motion.div>
 
-      {/* Navigation Controls - Arrows + Dots on same line */}
+      {/* Navigation Controls - Solo per mobile */}
       <AnimatePresence>
-        {showArrows && (
+        {showArrows && isMobile && (
           <motion.div
             className="flex items-center justify-center mt-6 gap-6"
             initial={{ opacity: 0, y: 20 }}
