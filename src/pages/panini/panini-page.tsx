@@ -24,10 +24,14 @@ const PaniniPage: React.FC = () => {
               PANINI
             </h2>
 
-            <p className="text-left italic text-xl text-white mb-8">
-              Serviti con patatine fritte
-            </p>
-            <p className="text-right italic text-xl text-white mb-8">€ 13,50</p>
+            <div className="flex justify-between">
+              <p className="text-left italic text-xl text-white mb-8">
+                Serviti con patatine fritte
+              </p>
+              <p className="text-right italic text-xl text-white mb-8">
+                € 13,50
+              </p>
+            </div>
 
             <div className="space-y-6">
               {paniniData.map((panino, index) => (
