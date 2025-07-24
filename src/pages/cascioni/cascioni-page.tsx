@@ -20,7 +20,7 @@ const CascioniPage: React.FC = () => {
       </h2>
       <div className="border-t border-[#c7b28c] pt-4 space-y-4">
         {items.map((item, index) => (
-          <div key={index} className="flex justify-between items-start">
+          <div key={index} className="flex justify-between items-start mr-3">
             <span className="font-bold uppercase text-white break-words">
               {item.title.split("\n").map((line, idx) => (
                 <React.Fragment key={idx}>
