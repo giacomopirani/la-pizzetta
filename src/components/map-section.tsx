@@ -19,7 +19,7 @@ const customIcon = new L.Icon({
 
 const MapSection = () => {
   return (
-    <section className="w-full flex flex-col items-center space-y-4 pb-6 border-t-amber-50 border-1">
+    <section className="w-full flex flex-col items-center space-y-4 pb-6 border-t-[#AA9782] border-1">
       <div className="text-center mb-6 mt-14">
         <motion.h2
           className="text-3xl md:text-4xl font-bold uppercase text-white"
