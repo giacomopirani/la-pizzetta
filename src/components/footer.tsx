@@ -38,7 +38,8 @@ const Footer = () => {
               <ul className="space-y-2 text-md gap-4">
                 <li className="text-bold uppercase flex gap-4 justify-start md:mb-4">
                   <FaClock size={23} />
-                  aperti tutti i giorni dalle 18:30 alle 22:00
+                  aperti tutti i giorni <br className="md:hidden" /> dalle 18:30
+                  alle 22:00
                 </li>
                 <li className="text-bold flex gap-4 justify-start mb-5">
                   <IoIosPhonePortrait size={25} />

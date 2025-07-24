@@ -20,7 +20,7 @@ const FrittiPage: React.FC = () => {
       </h2>
       <div className="border-t border-[#c7b28c] pt-4 space-y-4">
         {items.map((item, index) => (
-          <div key={index} className="flex justify-between items-start mr-3">
+          <div key={index} className="flex justify-between items-start mr-6">
             <div className="flex-1 pr-4">
               <span className="font-bold uppercase text-white break-words">
                 {item.title.split("\n").map((line, idx) => (
