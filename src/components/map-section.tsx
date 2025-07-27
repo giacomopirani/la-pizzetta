@@ -38,7 +38,7 @@ const MapSection = () => {
       </div>
 
       {/* Mappa */}
-      <div className="w-full border border-gray-200 shadow-md overflow-hidden">
+      <div className="w-full border border-gray-200 shadow-md overflow-hidden mb-6">
         <MapContainer
           center={position}
           zoom={16}
@@ -111,7 +111,7 @@ const MapSection = () => {
           )}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative flex items-center gap-3 bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-4 rounded-xl text-base font-semibold shadow-2xl overflow-hidden group cursor-pointer"
+          className="relative flex items-center gap-3 bg-gradient-to-r from-green-600 to-emerald-700 text-white px-8 py-4 rounded-xl text-base font-semibold shadow-2xl overflow-hidden group cursor-pointer "
           whileHover={{
             scale: 1.05,
             boxShadow: "0 25px 50px -12px rgba(34, 197, 94, 0.5)",
