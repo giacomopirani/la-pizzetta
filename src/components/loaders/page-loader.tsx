@@ -8,7 +8,7 @@ const PageLoader = () => {
 
   useEffect(() => {
     setLoading(true);
-    const timeout = setTimeout(() => setLoading(false), 1000);
+    const timeout = setTimeout(() => setLoading(false), 900);
     return () => clearTimeout(timeout);
   }, [location]);
 
