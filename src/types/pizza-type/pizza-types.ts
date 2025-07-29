@@ -8,6 +8,7 @@ export interface Pizza {
 }
 
 export interface PizzaSection {
+  items: any;
   icon: IconType;
   color: string;
   pizzas: Pizza[];

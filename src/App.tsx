@@ -7,11 +7,11 @@ import {
   useLocation,
 } from "react-router-dom";
 import BottomNav from "./components/bottom-nav";
-import Footer from "./components/footer";
 import AppLoader from "./components/loaders/app-loader";
 import Navbar from "./components/navbar";
 import PageTransitionWrapper from "./components/page-transition-wrapper";
 
+import Footer from "./components/footer";
 import MapSection from "./components/map-section";
 import { AppLoadingProvider } from "./context/app-loading-context";
 import CascioniPage from "./pages/cascioni/cascioni-page";

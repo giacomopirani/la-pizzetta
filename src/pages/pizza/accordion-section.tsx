@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useId, useRef, useState } from "react";
+
 import { FaChevronCircleDown } from "react-icons/fa";
 import type {
   PizzaSection,
@@ -19,19 +20,26 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
   ({ sectionKey, data, title, isOpen, onToggle }) => {
     const [isHovered, setIsHovered] = useState(false);
     const IconComponent = data.icon;
+    const contentId = useId();
+    const sectionRef = useRef<HTMLButtonElement>(null);
 
-    const getHeaderColor = () => {
-      if (sectionKey === "speciali") {
-        return "black";
-      }
-      if (sectionKey === "giganti") {
-        return "black";
-      }
-      return "black";
-    };
+    // Altezza della tua navbar fissa (modifica questo valore se la tua navbar ha un'altezza diversa)
+    const NAVBAR_HEIGHT = 64; // Esempio: 64px per una navbar h-16
+
+    // Rimosso l'useEffect precedente per lo scroll diretto
+    // Lo scroll verrà gestito dopo l'animazione di apertura
+
+    const glowBackground =
+      sectionKey === "speciali"
+        ? "linear-gradient(135deg, #b19173, #f0d9b5)"
+        : sectionKey === "giganti"
+        ? "linear-gradient(135deg, #4a4a4a, #2a2a2a)"
+        : "linear-gradient(135deg, #3a3a3a, #1a1a1a)";
 
     return (
       <motion.div
+        role="region"
+        aria-labelledby={`accordion-header-${contentId}`}
         className="mb-6 bg-black rounded-xl overflow-hidden border border-[#AA9782] relative"
         initial={false}
         animate={{
@@ -50,19 +58,20 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
             scale: isHovered ? 1.02 : 1,
           }}
           transition={{ duration: 0.4 }}
-          style={{
-            background:
-              sectionKey === "speciali"
-                ? "linear-gradient(135deg, #b19173, #f0d9b5)"
-                : sectionKey === "giganti"
-                ? "black"
-                : "black",
-          }}
+          style={{ background: glowBackground }}
         />
 
         <motion.button
-          className={`w-full p-6 text-left bg-gradient-to-r ${getHeaderColor()} relative overflow-hidden cursor-pointer transition-all duration-300`}
-          onClick={() => onToggle(sectionKey)}
+          ref={sectionRef} // Assegna il riferimento al bottone
+          id={`accordion-header-${contentId}`}
+          aria-expanded={isOpen}
+          aria-controls={`accordion-content-${contentId}`}
+          className="w-full p-6 text-left bg-black relative overflow-hidden cursor-pointer transition-all duration-300"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onToggle(sectionKey);
+          }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           whileHover={{
@@ -124,7 +133,9 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     ease: "easeInOut",
                   }}
                 >
-                  <IconComponent className="w-7 h-7 text-white" />
+                  {IconComponent && (
+                    <IconComponent className="w-7 h-7 text-white" />
+                  )}
                 </motion.div>
               </motion.div>
 
@@ -226,11 +237,38 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              id={`accordion-content-${contentId}`}
+              role="region"
+              aria-labelledby={`accordion-header-${contentId}`}
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
               className="overflow-hidden"
+              // Triggera lo scroll solo dopo che l'animazione di apertura è completa
+              onAnimationComplete={() => {
+                // Aggiungi un piccolo ritardo per assicurarti che il layout DOM sia stabile
+                setTimeout(() => {
+                  if (isOpen && sectionRef.current) {
+                    const rect = sectionRef.current.getBoundingClientRect();
+                    const currentScrollY = window.scrollY;
+
+                    const desiredHeaderTopInViewport = NAVBAR_HEIGHT;
+                    const currentHeaderTopInViewport = rect.top;
+                    const scrollAmount =
+                      currentHeaderTopInViewport - desiredHeaderTopInViewport;
+
+                    // Esegui lo scroll solo se l'intestazione non è già nella posizione desiderata
+                    // (con una tolleranza di 1px per evitare scroll inutili dovuti a differenze sub-pixel)
+                    if (Math.abs(scrollAmount) > 1) {
+                      window.scrollTo({
+                        top: currentScrollY + scrollAmount,
+                        behavior: "smooth",
+                      });
+                    }
+                  }
+                }, 50); // Ritardo di 50ms
+              }}
             >
               <motion.div
                 className="p-6 space-y-3 bg-black/80"
@@ -255,7 +293,6 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     </p>
                   </motion.div>
                 )}
-
                 {sectionKey === "speciali" && (
                   <motion.div
                     className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-white"
@@ -263,13 +300,12 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 0.3, delay: 0.2 }}
                   >
-                    <h4 className="text-white font-bold mb-2  tracking-wide">
+                    <h4 className="text-white font-bold mb-2 tracking-wide">
                       * Base <span className="text-red-700">Pomodoro</span> e
                       Mozzarella
                     </h4>
                   </motion.div>
                 )}
-
                 {data.pizzas.map((pizza, index) => (
                   <motion.div
                     key={`${sectionKey}-${index}`}
