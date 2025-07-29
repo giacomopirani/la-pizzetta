@@ -90,7 +90,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
             initial={{ x: "-100%" }}
             animate={{ x: isHovered ? "100%" : "-100%" }}
             transition={{
-              duration: 1.2,
+              duration: 1.8,
               ease: "easeInOut",
               repeat: isHovered ? Number.POSITIVE_INFINITY : 0,
               repeatDelay: 1.5,
@@ -106,7 +106,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                 ? "rgba(0,0,0,0.05)"
                 : "rgba(0,0,0,0.1)",
             }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.8 }}
           />
 
           <div className="relative flex items-center justify-between">
@@ -118,7 +118,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                   scale: 1.05,
                   backgroundColor: "rgba(255,255,255,0.25)",
                 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.8 }}
               >
                 <motion.div
                   animate={{
@@ -185,7 +185,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                   y: isHovered ? [0, -1, 0] : 0,
                 }}
                 transition={{
-                  duration: 1.5,
+                  duration: 1.2,
                   ease: "easeInOut",
                   repeat: isHovered ? Number.POSITIVE_INFINITY : 0,
                 }}
@@ -239,7 +239,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
               className="overflow-hidden"
               // Triggera lo scroll solo dopo che l'animazione di apertura è completa
               onAnimationComplete={() => {
@@ -271,7 +271,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
               >
                 {sectionKey === "giganti" && (
                   <motion.div
@@ -308,7 +308,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 0.3,
+                      duration: 0.8,
                       delay: 0.1 + index * 0.05,
                     }}
                   >
