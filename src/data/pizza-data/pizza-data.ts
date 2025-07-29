@@ -284,23 +284,6 @@ export const pizzaData: PizzaData = {
       },
     ],
   },
-  marinare: {
-    icon: BiSolidPizza,
-    color: "black",
-    pizzas: [
-      {
-        name: "MARINARA",
-        ingredients: "Pomodoro, aglio, prezzemolo",
-        price: "€ 5,00",
-      },
-      {
-        name: "SARY",
-        ingredients:
-          "Pomodoro, aglio, prezzemolo, prosciutto crudo, melanzane, zucchine",
-        price: "€ 8,50",
-      },
-    ],
-  },
   fornarine: {
     icon: PiPizzaLight,
     color: "black",
@@ -324,6 +307,23 @@ export const pizzaData: PizzaData = {
         name: "BURRATA, MORTADELLA E GRANELLA DI PISTACCHI",
         ingredients: "",
         price: "€ 9,00",
+      },
+    ],
+  },
+  marinare: {
+    icon: BiSolidPizza,
+    color: "black",
+    pizzas: [
+      {
+        name: "MARINARA",
+        ingredients: "Pomodoro, aglio, prezzemolo",
+        price: "€ 5,00",
+      },
+      {
+        name: "SARY",
+        ingredients:
+          "Pomodoro, aglio, prezzemolo, prosciutto crudo, melanzane, zucchine",
+        price: "€ 8,50",
       },
     ],
   },

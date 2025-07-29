@@ -23,11 +23,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
     const contentId = useId();
     const sectionRef = useRef<HTMLButtonElement>(null);
 
-    // Altezza della tua navbar fissa (modifica questo valore se la tua navbar ha un'altezza diversa)
-    const NAVBAR_HEIGHT = 64; // Esempio: 64px per una navbar h-16
-
-    // Rimosso l'useEffect precedente per lo scroll diretto
-    // Lo scroll verrà gestito dopo l'animazione di apertura
+    const NAVBAR_HEIGHT = 80;
 
     const glowBackground =
       sectionKey === "speciali"
