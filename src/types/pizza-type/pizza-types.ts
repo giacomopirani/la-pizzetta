@@ -1,4 +1,5 @@
 import type { IconType } from "react-icons";
+import type { JSX } from "react/jsx-runtime";
 
 export interface Pizza {
   name: string;
@@ -8,6 +9,7 @@ export interface Pizza {
 }
 
 export interface PizzaSection {
+  map(arg0: (pizza: any) => JSX.Element): import("react").ReactNode;
   items: any;
   icon: IconType;
   color: string;

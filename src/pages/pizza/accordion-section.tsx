@@ -1,6 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useId, useRef, useState } from "react";
-
+import React, { useEffect, useId, useRef } from "react";
 import { FaChevronCircleDown } from "react-icons/fa";
 import type {
   PizzaSection,
@@ -16,300 +15,215 @@ interface AccordionSectionProps {
   onToggle: (section: SectionKey) => void;
 }
 
-const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
-  ({ sectionKey, data, title, isOpen, onToggle }) => {
-    const [isHovered, setIsHovered] = useState(false);
-    const IconComponent = data.icon;
-    const contentId = useId();
-    const sectionRef = useRef<HTMLButtonElement>(null);
+const AccordionSection: React.FC<AccordionSectionProps> = ({
+  sectionKey,
+  data,
+  title,
+  isOpen,
+  onToggle,
+}) => {
+  const IconComponent = data.icon;
+  const contentId = useId();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const NAVBAR_HEIGHT = 80;
 
-    const NAVBAR_HEIGHT = 80;
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.blur();
+    onToggle(sectionKey);
+  };
 
-    const glowBackground =
-      sectionKey === "speciali"
-        ? "linear-gradient(135deg, #b19173, #f0d9b5)"
-        : sectionKey === "giganti"
-        ? "linear-gradient(135deg, #4a4a4a, #2a2a2a)"
-        : "linear-gradient(135deg, #3a3a3a, #1a1a1a)";
+  useEffect(() => {
+    if (isOpen && headerRef.current) {
+      const doScroll = () => {
+        const headerTop =
+          headerRef.current!.getBoundingClientRect().top + window.scrollY;
+        const scrollPosition = headerTop - NAVBAR_HEIGHT;
 
-    return (
-      <motion.div
-        role="region"
-        aria-labelledby={`accordion-header-${contentId}`}
-        className="mb-6 bg-black rounded-xl overflow-hidden border border-[#AA9782] relative"
-        initial={false}
-        animate={{
-          scale: isOpen ? 1.01 : 1,
-          boxShadow: isOpen
-            ? "0 20px 40px -12px rgba(0, 0, 0, 0.6)"
-            : "0 8px 20px -5px rgba(0, 0, 0, 0.3)",
-        }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Glow effect di background */}
-        <motion.div
-          className="absolute inset-0 rounded-xl blur-xl opacity-0 pointer-events-none"
-          animate={{
-            opacity: isHovered ? 0.3 : 0,
-            scale: isHovered ? 1.02 : 1,
-          }}
-          transition={{ duration: 0.4 }}
-          style={{ background: glowBackground }}
-        />
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth",
+        });
+      };
 
+      // Aspetta un frame per assicurarti che l’elemento sia espanso
+      requestAnimationFrame(() => {
+        setTimeout(doScroll, 50); // piccolo delay opzionale
+      });
+    }
+  }, [isOpen]);
+
+  return (
+    <motion.div
+      className=" bg-black rounded-xl border border-[#AA9782] overflow-hidden"
+      whileHover={{
+        scale: 1.005,
+        boxShadow: "0 10px 30px -5px rgba(170, 151, 130, 0.2)",
+      }}
+      animate={{
+        scale: isOpen ? 1.01 : 1,
+        boxShadow: isOpen
+          ? "0 15px 35px -5px rgba(170, 151, 130, 0.3)"
+          : "0 5px 15px -3px rgba(0, 0, 0, 0.3)",
+      }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+    >
+      <div ref={headerRef}>
         <motion.button
-          ref={sectionRef} // Assegna il riferimento al bottone
           id={`accordion-header-${contentId}`}
           aria-expanded={isOpen}
           aria-controls={`accordion-content-${contentId}`}
-          className="w-full p-6 text-left bg-black relative overflow-hidden cursor-pointer transition-all duration-300"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onToggle(sectionKey);
-          }}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          whileHover={{
-            scale: 1.02,
-            y: -2,
-          }}
-          whileTap={{
-            scale: 0.98,
-            y: 0,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 25,
-          }}
+          className="w-full p-3 text-left bg-black hover:bg-gray-900 transition-colors duration-200 relative overflow-hidden"
+          onClick={handleClick}
+          whileTap={{ scale: 0.995 }}
         >
-          {/* Effetto shimmer sottile */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            initial={{ x: "-100%" }}
-            animate={{ x: isHovered ? "100%" : "-100%" }}
-            transition={{
-              duration: 1.8,
-              ease: "easeInOut",
-              repeat: isHovered ? Number.POSITIVE_INFINITY : 0,
-              repeatDelay: 1.5,
-            }}
-            style={{ transform: "skewX(-20deg)" }}
+            className="absolute inset-0 bg-gradient-to-r from-[#AA9782]/5 via-[#AA9782]/10 to-[#AA9782]/5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isOpen ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
           />
-
-          {/* Overlay con glassmorphism */}
-          <motion.div
-            className="absolute inset-0 bg-black/10 backdrop-blur-sm"
-            animate={{
-              backgroundColor: isHovered
-                ? "rgba(0,0,0,0.05)"
-                : "rgba(0,0,0,0.1)",
-            }}
-            transition={{ duration: 0.8 }}
-          />
-
           <div className="relative flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              {/* Icona con animazioni avanzate */}
               <motion.div
-                className="bg-white/15 p-3 rounded-lg backdrop-blur-sm"
-                whileHover={{
-                  scale: 1.05,
-                  backgroundColor: "rgba(255,255,255,0.25)",
+                className="bg-white/15 p-3 rounded-lg"
+                animate={{
+                  backgroundColor: isOpen
+                    ? "rgba(170, 151, 130, 0.3)"
+                    : "rgba(255,255,255,0.15)",
+                  scale: isOpen ? 1.05 : 1,
                 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.3 }}
               >
-                <motion.div
-                  animate={{
-                    rotate: isHovered ? [0, -5, 5, 0] : 0,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                    ease: "easeInOut",
-                  }}
-                >
-                  {IconComponent && (
+                {IconComponent && (
+                  <motion.div
+                    animate={{ rotate: isOpen ? [0, -10, 10, 0] : 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
                     <IconComponent className="w-7 h-7 text-white" />
-                  )}
-                </motion.div>
+                  </motion.div>
+                )}
               </motion.div>
-
-              {/* Testo con animazioni staggered */}
-              <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
+              <div>
                 <motion.h2
                   style={{ fontFamily: "Hoverage, sans-serif" }}
                   className="text-2xl font-black text-[#AA9782] tracking-wider uppercase"
-                  whileHover={{
-                    scale: 1.02,
-                    letterSpacing: "0.1em",
-                    textShadow: "0 0 20px rgba(170, 151, 130, 0.3)",
+                  animate={{
+                    color: isOpen ? "#f0d9b5" : "#AA9782",
+                    textShadow: isOpen
+                      ? "0 0 20px rgba(170, 151, 130, 0.4)"
+                      : "none",
                   }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {title}
                 </motion.h2>
                 <motion.p
                   className="text-white/70 text-sm font-medium mt-1"
-                  whileHover={{
-                    color: "rgba(255,255,255,0.9)",
-                    scale: 1.01,
+                  animate={{
+                    color: isOpen
+                      ? "rgba(255,255,255,0.9)"
+                      : "rgba(255,255,255,0.7)",
                   }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {data.pizzas.length}{" "}
                   {data.pizzas.length === 1
                     ? "pizza disponibile"
                     : "pizze disponibili"}
                 </motion.p>
-              </motion.div>
+              </div>
             </div>
-
-            {/* Chevron con animazioni fluide */}
             <motion.div
-              className="bg-white/15 p-2 rounded-lg backdrop-blur-sm"
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "rgba(255,255,255,0.25)",
-              }}
+              className="bg-white/15 p-2 rounded-lg"
               animate={{
                 rotate: isOpen ? 180 : 0,
+                backgroundColor: isOpen
+                  ? "rgba(170, 151, 130, 0.3)"
+                  : "rgba(255,255,255,0.15)",
+                scale: isOpen ? 1.1 : 1,
               }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              whileHover={{ scale: 1.1 }}
             >
-              <motion.div
-                animate={{
-                  y: isHovered ? [0, -1, 0] : 0,
-                }}
-                transition={{
-                  duration: 1.2,
-                  ease: "easeInOut",
-                  repeat: isHovered ? Number.POSITIVE_INFINITY : 0,
-                }}
-              >
-                <FaChevronCircleDown className="w-6 h-6 text-white" />
-              </motion.div>
+              <FaChevronCircleDown className="w-6 h-6 text-white" />
             </motion.div>
           </div>
-
-          {/* Indicatore di stato aperto */}
           <motion.div
-            className="absolute bottom-0 left-0 h-1 bg-[#AA9782]/60"
+            className="mt-4 h-1 bg-[#AA9782]/60 rounded-full"
             initial={{ width: 0 }}
             animate={{
               width: isOpen ? "100%" : "0%",
+              backgroundColor: isOpen ? "#f0d9b5" : "rgba(170, 151, 130, 0.6)",
             }}
-            transition={{
-              duration: 0.4,
-              ease: "easeInOut",
-            }}
-          />
-
-          {/* Effetto hover sottile */}
-          <motion.div
-            className="absolute inset-0 bg-white/5 rounded-t-xl"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: isHovered ? 1 : 0,
-            }}
-            transition={{ duration: 0.2 }}
-          />
-
-          {/* Bordo animato sottile */}
-          <motion.div
-            className="absolute inset-0 rounded-t-xl border border-transparent"
-            animate={{
-              borderColor: isHovered
-                ? "rgba(170, 151, 130, 0.3)"
-                : "transparent",
-            }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           />
         </motion.button>
+      </div>
 
-        <AnimatePresence>
-          {isOpen && (
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id={`accordion-content-${contentId}`}
+            className="bg-black/80 overflow-hidden"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{
+              height: { duration: 0.4, ease: "easeOut" },
+              opacity: { duration: 0.3, delay: 0.1 },
+            }}
+          >
             <motion.div
-              id={`accordion-content-${contentId}`}
-              role="region"
-              aria-labelledby={`accordion-header-${contentId}`}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="overflow-hidden"
-              // Triggera lo scroll solo dopo che l'animazione di apertura è completa
-              onAnimationComplete={() => {
-                // Aggiungi un piccolo ritardo per assicurarti che il layout DOM sia stabile
-                setTimeout(() => {
-                  if (isOpen && sectionRef.current) {
-                    const rect = sectionRef.current.getBoundingClientRect();
-                    const currentScrollY = window.scrollY;
-
-                    const desiredHeaderTopInViewport = NAVBAR_HEIGHT;
-                    const currentHeaderTopInViewport = rect.top;
-                    const scrollAmount =
-                      currentHeaderTopInViewport - desiredHeaderTopInViewport;
-
-                    // Esegui lo scroll solo se l'intestazione non è già nella posizione desiderata
-                    // (con una tolleranza di 1px per evitare scroll inutili dovuti a differenze sub-pixel)
-                    if (Math.abs(scrollAmount) > 1) {
-                      window.scrollTo({
-                        top: currentScrollY + scrollAmount,
-                        behavior: "smooth",
-                      });
-                    }
-                  }
-                }, 50); // Ritardo di 50ms
-              }}
+              className="p-6 space-y-3"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
             >
-              <motion.div
-                className="p-6 space-y-3 bg-black/80"
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-              >
-                {sectionKey === "giganti" && (
-                  <motion.div
-                    className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-amber-100"
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                  >
-                    <h4 className="text-white font-bold mb-2 uppercase tracking-wide">
-                      🍕 Pizze Giganti
-                    </h4>
-                    <p className="text-white text-sm">
-                      Le nostre pizze giganti sono ideali per 3/4 persone, da
-                      gustare in compagnia!
-                    </p>
-                  </motion.div>
-                )}
-                {sectionKey === "speciali" && (
-                  <motion.div
-                    className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-white"
-                    initial={{ scale: 0.95, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
-                  >
-                    <h4 className="text-white font-bold mb-2 tracking-wide">
-                      * Base <span className="text-red-700">Pomodoro</span> e
-                      Mozzarella
-                    </h4>
-                  </motion.div>
-                )}
+              {sectionKey === "giganti" && (
+                <motion.div
+                  className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-amber-100"
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+                >
+                  <h4 className="text-white font-bold mb-2 uppercase tracking-wide">
+                    🍕 Pizze Giganti
+                  </h4>
+                  <p className="text-white text-sm">
+                    Le nostre pizze giganti sono ideali per 3/4 persone, da
+                    gustare in compagnia!
+                  </p>
+                </motion.div>
+              )}
+              {sectionKey === "speciali" && (
+                <motion.div
+                  className="bg-[#AA9782] rounded-lg p-4 mb-6 border border-white"
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
+                >
+                  <h4 className="text-white font-bold mb-2 tracking-wide">
+                    * Base <span className="text-red-700">Pomodoro</span> e
+                    Mozzarella
+                  </h4>
+                </motion.div>
+              )}
+
+              <motion.div className="max-h-[400px] overflow-y-auto">
                 {data.pizzas.map((pizza, index) => (
                   <motion.div
-                    key={`${sectionKey}-${index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    key={`${sectionKey}-${pizza.name}-${index}`}
+                    initial={{ opacity: 0, x: -20, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
                     transition={{
-                      duration: 0.8,
-                      delay: 0.1 + index * 0.05,
+                      duration: 0.4,
+                      delay: 0.3 + index * 0.05,
+                      ease: "easeOut",
+                    }}
+                    whileHover={{
+                      scale: 1.02,
+                      x: 5,
+                      transition: { duration: 0.2 },
                     }}
                   >
                     <PizzaItem pizza={pizza} index={index} color={data.color} />
@@ -317,11 +231,11 @@ const AccordionSection: React.FC<AccordionSectionProps> = React.memo(
                 ))}
               </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-    );
-  }
-);
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
 
 export default AccordionSection;

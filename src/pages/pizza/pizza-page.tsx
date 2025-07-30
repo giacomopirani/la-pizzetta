@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { pizzaData, sectionTitles } from "../../data/pizza-data/pizza-data";
 import type { SectionKey } from "../../types/pizza-type/pizza-types";
 import AccordionSection from "./accordion-section";
@@ -12,11 +12,30 @@ interface PizzaPageProps {
 }
 
 const PizzaPage: React.FC<PizzaPageProps> = ({ headerBackgroundImage }) => {
-  const [openSection, setOpenSection] = useState<SectionKey>();
+  const [openSection, setOpenSection] = useState<SectionKey | null>(null);
+  const [scrollTarget, setScrollTarget] = useState<SectionKey | null>(null);
 
-  const toggleSection = useCallback((section: SectionKey) => {
-    setOpenSection((prev) => (prev !== section ? section : undefined));
-  }, []);
+  const handleToggle = (section: SectionKey) => {
+    if (section === openSection) {
+      setOpenSection(null); // Chiudo
+    } else {
+      setOpenSection(null); // Prima chiudo quella aperta
+      setScrollTarget(section); // Segno quella da aprire dopo
+    }
+  };
+
+  // Poi, con un effetto, apri la nuova sezione DOPO la chiusura di quella vecchia
+  useEffect(() => {
+    if (!openSection && scrollTarget) {
+      // Ritardo l’apertura per permettere l’animazione di chiusura
+      const timeout = setTimeout(() => {
+        setOpenSection(scrollTarget);
+        setScrollTarget(null);
+      }, 300); // Durata dell'uscita dell’accordion (match con framer-motion)
+
+      return () => clearTimeout(timeout);
+    }
+  }, [openSection, scrollTarget]);
 
   const sectionKeys = Object.keys(pizzaData) as SectionKey[];
 
@@ -41,7 +60,7 @@ const PizzaPage: React.FC<PizzaPageProps> = ({ headerBackgroundImage }) => {
                 data={pizzaData[key]}
                 title={sectionTitles[key]}
                 isOpen={openSection === key}
-                onToggle={toggleSection}
+                onToggle={handleToggle}
               />
             ))}
           </motion.div>

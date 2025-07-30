@@ -38,7 +38,7 @@ const PizzaItem: React.FC<PizzaItemProps> = React.memo(({ pizza, index }) => {
       className="group"
     >
       <div
-        className={`${getBackgroundColor()} rounded-xl p-4 border hover:border-gray-500/50 transition-all duration-300 hover:bg-gray-700/50`}
+        className={`${getBackgroundColor()} rounded-xl p-4 border mb-3 hover:border-gray-500/50 transition-all duration-300 hover:bg-gray-700/50`}
       >
         <div className="flex justify-between items-start">
           <div className="flex-1">
