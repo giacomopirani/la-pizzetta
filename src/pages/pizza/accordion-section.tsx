@@ -29,7 +29,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
   const scrollableContentRef = useRef<HTMLDivElement>(null); // Ref per il contenuto scrollabile
   const [isScrollable, setIsScrollable] = useState(false); // Stato per tracciare la scrollabilità
 
-  const NAVBAR_HEIGHT = 80; // Altezza della tua navbar, se presente
+  const NAVBAR_HEIGHT = 85; // Altezza della tua navbar, se presente
 
   // Categorie per cui mostrare l'indicatore di scroll
   const categoriesWithScrollIndicator: SectionKey[] = [
