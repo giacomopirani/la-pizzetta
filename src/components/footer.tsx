@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { FaClock, FaFacebookF, FaInstagram, FaPhone } from "react-icons/fa";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { TbWorldWww } from "react-icons/tb";
-import logoPizzetta from "../../public/logo-pizzeria.png";
+import logoPizzetta from "../assets/logo-pizzeria.png";
 
 const Footer = () => {
   return (

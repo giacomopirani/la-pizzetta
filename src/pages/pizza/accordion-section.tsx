@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import type React from "react";
 import { useEffect, useId, useRef, useState } from "react";
-import { FaChevronCircleDown } from "react-icons/fa"; // Assicurati che react-icons sia installato
+import { FaChevronCircleDown } from "react-icons/fa";
 import type {
   PizzaSection,
   SectionKey,
-} from "../../types/pizza-type/pizza-types"; // Assicurati che il percorso sia corretto
-import PizzaItem from "./pizza-item"; // Assicurati che il percorso sia corretto
+} from "../../types/pizza-type/pizza-types";
+import PizzaItem from "./pizza-item";
 
 interface AccordionSectionProps {
   sectionKey: SectionKey;
@@ -271,12 +271,12 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
                 ))}
               </motion.div>
             </motion.div>
-            {shouldShowScrollIndicator && ( // Mostra il gradiente e il testo solo se il contenuto è scrollabile e per le categorie specificate
+            {shouldShowScrollIndicator && (
               <>
-                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></div>
+                <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none"></div>
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 text-center text-white text-sm flex items-center justify-center space-x-1 pointer-events-none pb-4 pt-4" // Aggiunto pb-4
-                  initial={{ opacity: 0, y: 10 }}
+                  className="absolute top-0 left-0 right-0 text-center text-white text-sm flex items-center justify-center space-x-1 pointer-events-none pt-1 pb-2"
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.3 }}
                 >
