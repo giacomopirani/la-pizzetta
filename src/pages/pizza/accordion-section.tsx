@@ -1,11 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useEffect, useId, useRef } from "react";
-import { FaChevronCircleDown } from "react-icons/fa";
+import type React from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { FaChevronCircleDown } from "react-icons/fa"; // Assicurati che react-icons sia installato
 import type {
   PizzaSection,
   SectionKey,
-} from "../../types/pizza-type/pizza-types";
-import PizzaItem from "./pizza-item";
+} from "../../types/pizza-type/pizza-types"; // Assicurati che il percorso sia corretto
+import PizzaItem from "./pizza-item"; // Assicurati che il percorso sia corretto
 
 interface AccordionSectionProps {
   sectionKey: SectionKey;
@@ -25,7 +26,18 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
   const IconComponent = data.icon;
   const contentId = useId();
   const headerRef = useRef<HTMLDivElement>(null);
-  const NAVBAR_HEIGHT = 80;
+  const scrollableContentRef = useRef<HTMLDivElement>(null); // Ref per il contenuto scrollabile
+  const [isScrollable, setIsScrollable] = useState(false); // Stato per tracciare la scrollabilità
+
+  const NAVBAR_HEIGHT = 80; // Altezza della tua navbar, se presente
+
+  // Categorie per cui mostrare l'indicatore di scroll
+  const categoriesWithScrollIndicator: SectionKey[] = [
+    "classiche",
+    "speciali",
+    "bianche",
+    "fornarine",
+  ];
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.currentTarget.blur();
@@ -38,23 +50,48 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
         const headerTop =
           headerRef.current!.getBoundingClientRect().top + window.scrollY;
         const scrollPosition = headerTop - NAVBAR_HEIGHT;
-
         window.scrollTo({
           top: scrollPosition,
           behavior: "smooth",
         });
       };
-
       // Aspetta un frame per assicurarti che l’elemento sia espanso
       requestAnimationFrame(() => {
-        setTimeout(doScroll, 50); // piccolo delay opzionale
+        setTimeout(doScroll, 50);
       });
     }
   }, [isOpen]);
 
+  // Effetto per controllare la scrollabilità del contenuto
+  useEffect(() => {
+    const checkScrollability = () => {
+      if (scrollableContentRef.current) {
+        const { scrollHeight, clientHeight } = scrollableContentRef.current;
+        setIsScrollable(scrollHeight > clientHeight);
+      }
+    };
+
+    // Controlla al montaggio e quando isOpen cambia (il contenuto potrebbe espandersi/ridursi)
+    checkScrollability();
+    // Controlla anche al ridimensionamento della finestra
+    window.addEventListener("resize", checkScrollability);
+
+    // Ricontrolla dopo che il contenuto è stato renderizzato e le animazioni si sono stabilizzate
+    const timeout = setTimeout(checkScrollability, 500); // Dai tempo alle animazioni di framer-motion
+
+    return () => {
+      window.removeEventListener("resize", checkScrollability);
+      clearTimeout(timeout);
+    };
+  }, [isOpen, data.pizzas.length]); // Rilancia se il contenuto cambia o l'accordion si apre/chiude
+
+  // Determina se mostrare l'indicatore di scroll
+  const shouldShowScrollIndicator =
+    isScrollable && categoriesWithScrollIndicator.includes(sectionKey);
+
   return (
     <motion.div
-      className=" bg-black rounded-xl border border-[#AA9782] overflow-hidden"
+      className="bg-black rounded-xl border border-[#AA9782] overflow-hidden"
       whileHover={{
         scale: 1.005,
         boxShadow: "0 10px 30px -5px rgba(170, 151, 130, 0.2)",
@@ -72,9 +109,16 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
           id={`accordion-header-${contentId}`}
           aria-expanded={isOpen}
           aria-controls={`accordion-content-${contentId}`}
-          className="w-full p-3 text-left bg-black hover:bg-gray-900 transition-colors duration-200 relative overflow-hidden"
+          className="w-full p-3 pt-4 text-left bg-black transition-colors duration-200 relative overflow-hidden"
           onClick={handleClick}
           whileTap={{ scale: 0.995 }}
+          // Nuovo effetto hover per la categoria
+          whileHover={{
+            backgroundColor: "#1a1a1a", // Nero leggermente più chiaro
+            boxShadow: "0 0 20px rgba(170, 151, 130, 0.4)", // Bagliore dorato
+            y: -2, // Leggero sollevamento
+          }}
+          transition={{ duration: 0.2, ease: "easeOut" }} // Transizione per l'hover
         >
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-[#AA9782]/5 via-[#AA9782]/10 to-[#AA9782]/5"
@@ -105,7 +149,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
               </motion.div>
               <div>
                 <motion.h2
-                  style={{ fontFamily: "Hoverage, sans-serif" }}
+                  style={{ fontFamily: "Hoverage, sans-serif" }} // Assicurati che questo font sia caricato nel tuo progetto
                   className="text-2xl font-black text-[#AA9782] tracking-wider uppercase"
                   animate={{
                     color: isOpen ? "#f0d9b5" : "#AA9782",
@@ -159,12 +203,11 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
           />
         </motion.button>
       </div>
-
       <AnimatePresence>
         {isOpen && (
           <motion.div
             id={`accordion-content-${contentId}`}
-            className="bg-black/80 overflow-hidden"
+            className="bg-black/80 overflow-hidden relative" // Aggiunto 'relative' qui
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -208,8 +251,10 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
                   </h4>
                 </motion.div>
               )}
-
-              <motion.div className="max-h-[400px] overflow-y-auto">
+              <motion.div
+                className="max-h-[400px] overflow-y-auto" // Rimosso 'relative' da qui
+                ref={scrollableContentRef} // Assegna il ref qui
+              >
                 {data.pizzas.map((pizza, index) => (
                   <motion.div
                     key={`${sectionKey}-${pizza.name}-${index}`}
@@ -220,17 +265,26 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
                       delay: 0.3 + index * 0.05,
                       ease: "easeOut",
                     }}
-                    whileHover={{
-                      scale: 1.02,
-                      x: 5,
-                      transition: { duration: 0.2 },
-                    }}
                   >
                     <PizzaItem pizza={pizza} index={index} color={data.color} />
                   </motion.div>
                 ))}
               </motion.div>
             </motion.div>
+            {shouldShowScrollIndicator && ( // Mostra il gradiente e il testo solo se il contenuto è scrollabile e per le categorie specificate
+              <>
+                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></div>
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 text-center text-white text-sm flex items-center justify-center space-x-1 pointer-events-none pb-4 pt-4" // Aggiunto pb-4
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.3 }}
+                >
+                  <span>Scorri per vedere altro</span>
+                  <FaChevronCircleDown className="w-4 h-4 animate-bounce" />
+                </motion.div>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
