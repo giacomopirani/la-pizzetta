@@ -26,12 +26,11 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
   const IconComponent = data.icon;
   const contentId = useId();
   const headerRef = useRef<HTMLDivElement>(null);
-  const scrollableContentRef = useRef<HTMLDivElement>(null); // Ref per il contenuto scrollabile
-  const [isScrollable, setIsScrollable] = useState(false); // Stato per tracciare la scrollabilità
+  const scrollableContentRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
 
-  const NAVBAR_HEIGHT = 90; // Altezza della tua navbar, se presente
+  const NAVBAR_HEIGHT = 90;
 
-  // Categorie per cui mostrare l'indicatore di scroll
   const categoriesWithScrollIndicator: SectionKey[] = [
     "classiche",
     "speciali",
@@ -55,14 +54,13 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
           behavior: "smooth",
         });
       };
-      // Aspetta un frame per assicurarti che l’elemento sia espanso
+
       requestAnimationFrame(() => {
         setTimeout(doScroll, 50);
       });
     }
   }, [isOpen]);
 
-  // Effetto per controllare la scrollabilità del contenuto
   useEffect(() => {
     const checkScrollability = () => {
       if (scrollableContentRef.current) {
@@ -71,21 +69,18 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
       }
     };
 
-    // Controlla al montaggio e quando isOpen cambia (il contenuto potrebbe espandersi/ridursi)
     checkScrollability();
-    // Controlla anche al ridimensionamento della finestra
+
     window.addEventListener("resize", checkScrollability);
 
-    // Ricontrolla dopo che il contenuto è stato renderizzato e le animazioni si sono stabilizzate
-    const timeout = setTimeout(checkScrollability, 500); // Dai tempo alle animazioni di framer-motion
+    const timeout = setTimeout(checkScrollability, 500);
 
     return () => {
       window.removeEventListener("resize", checkScrollability);
       clearTimeout(timeout);
     };
-  }, [isOpen, data.pizzas.length]); // Rilancia se il contenuto cambia o l'accordion si apre/chiude
+  }, [isOpen, data.pizzas.length]);
 
-  // Determina se mostrare l'indicatore di scroll
   const shouldShowScrollIndicator =
     isScrollable && categoriesWithScrollIndicator.includes(sectionKey);
 
@@ -149,7 +144,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
               </motion.div>
               <div>
                 <motion.h2
-                  style={{ fontFamily: "Hoverage, sans-serif" }} // Assicurati che questo font sia caricato nel tuo progetto
+                  style={{ fontFamily: "Hoverage, sans-serif" }}
                   className="text-2xl font-black text-[#AA9782] tracking-wider uppercase"
                   animate={{
                     color: isOpen ? "#f0d9b5" : "#AA9782",
@@ -207,7 +202,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
         {isOpen && (
           <motion.div
             id={`accordion-content-${contentId}`}
-            className="bg-black/80 overflow-hidden relative" // Aggiunto 'relative' qui
+            className="bg-black/80 overflow-hidden relative"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -275,7 +270,7 @@ const AccordionSection: React.FC<AccordionSectionProps> = ({
               <>
                 <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/80 to-transparent pointer-events-none"></div>
                 <motion.div
-                  className="absolute top-0 left-0 right-0 text-center text-white text-sm flex items-center justify-center space-x-1 pointer-events-none pt-1 pb-2"
+                  className="absolute top-0 left-0 right-0 text-center text-white text-sm flex items-center justify-center space-x-1 pointer-events-none pt-0.5 pb-2"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.3 }}
