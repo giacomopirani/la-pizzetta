@@ -1,3 +1,5 @@
 # SPA fallback
 # This ensures that unknown routes are handled by React and served from index.html.
 /* /index.html 200
+# Redirect static asset explicitly
+/og-image-pizzeria.jpg    /og-image-pizzeria.jpg    200
