@@ -76,7 +76,7 @@ const Footer = () => {
           <div className="space-y-4 text-left">
             <h3 className="text-lg font-semibold text-white">Contattaci</h3>
             <div className="text-sm">
-              <p>Via Giuseppe di Vittorio,9 - Cattolica(RN) 47841</p>
+              <p>Via Giuseppe di Vittorio, 9 - Cattolica(RN) 47841</p>
               <p>Tel. 0541 1491541</p>
             </div>
           </div>
